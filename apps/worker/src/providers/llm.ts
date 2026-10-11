@@ -145,8 +145,9 @@ const FALLBACK_MODELS = new Set(["claude-sonnet-5-5", "claude-opus-5-5"]); // se
 export class ClaudeLlmProvider implements LlmProvider {
   name = "claude";
   private client: Anthropic;
-  constructor(apiKey: string, private models: ClaudeModels) {
-    this.client = new Anthropic({ apiKey, maxRetries: 3 });
+  constructor(apiKey: string, private models: ClaudeModels, workspaceId?: string) {
+    // keys not scoped to a workspace must name the workspace on every request
+    this.client = new Anthropic({ apiKey, maxRetries: 3, defaultHeaders: workspaceId ? { "anthropic-workspace-id": workspaceId } : undefined });
   }
 
   private model(step: keyof Omit<ClaudeModels, "high">, b: ProjectBrief): string {
@@ -250,5 +251,5 @@ export function createLlmProvider(fixturesDir: string, mode: string): LlmProvide
     script: env("LLM_MODEL_SCRIPT", "claude-sonnet-5-5"),
     plan: env("LLM_MODEL_PLAN", "claude-sonnet-5-5"),
     high: env("LLM_MODEL_HIGH", "claude-opus-5-5"),
-  });
+  }, env("ANTHROPIC_WORKSPACE_ID", "") || undefined);
 }

@@ -232,3 +232,23 @@
   - mock E2E 13/13 (`scripts/e2e-m2.ts`), including a redo with re-assembly in 48 s
 - **Advisor:** the new `rpc_*` SECURITY DEFINER warnings are intentional (user-facing, each checks `auth.uid()` ownership and status). Leaked-password protection is an Auth setting the user enables in the dashboard.
 - **Follow-up for M7:** deleting a whole user account must bypass the append-only ledger trigger (cascade delete).
+
+## 2026-10-11 — D018: fal caps raised (user-approved after adding fal credit)
+- **New caps:** total `FAL_TOTAL_BUDGET_USD` $9 → **$15**; daily `GLOBAL_DAILY_SPEND_USD` $6 → **$8**. Spend at the time of the change: $5.86.
+- **Context:** "What If You Never Slept Again?" (Claude-written, 10 scenes) had motion turned on for 9 of 10 scenes by the user. 341 credits were charged against a 366-credit hold, so the estimate covered it.
+- **Finding:** Claude's plan produced many 4–7-word scenes (2–3 s), but H3 bills a 5 s minimum. Follow-up: route scenes under 5 s to Wan 3.0 (2 s minimum), or tell the planner to prefer ≥ 4 s scenes.
+- The `ANTHROPIC_WORKSPACE_ID` header was added for keys not scoped to a workspace.
+
+## 2026-10-11 — D019: First Claude-written video (live verification #1)
+- **"What If You Never Slept Again?"**: Sonnet 5.5 research, script, and plan; 10 scenes, all animated by the user's choice; Paper Cut-out style. 31.6 s, −14.9 LUFS.
+- **Cost:** Claude $0.435 (research $0.38 including web search, script $0.04, plan $0.03). fal $3.18. Credits: estimate 366 → charged 370, then settled (hold 0). **fal total $6.15 / $15.**
+- **Quality review:**
+  - The style is consistent, and the recurring characters (teen, fly) are recognisable.
+  - **Issues:**
+    - The image model drew a "2024" calendar in the 2020 Harvard scene. That's text despite the no-text rule, and a factual mismatch.
+    - Slight drift on the teen (glasses appear in one scene only).
+    - One claim ("saw a forest on day 5") is sourced to a weak site (mamamia.com.au).
+  - **Follow-ups:**
+    - Steer the researcher to primary or high-reputation sources, and flag weak-source claims in Script Review.
+    - Add "no calendars or dates" to diagram prompts.
+    - Use the auto-QA pass (Haiku vision) once wired.
