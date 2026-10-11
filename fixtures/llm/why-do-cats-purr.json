@@ -1,0 +1,180 @@
+{
+  "topic_match": [
+    "why do cats purr",
+    "cats purr",
+    "cat purr"
+  ],
+  "research": {
+    "candidates": [
+      {
+        "premise": "A cat's food-begging purr hides a cry tuned to human ears.",
+        "key_fact": "Solicitation purrs embed a high-frequency cry; listeners rated them more urgent and less pleasant (McComb et al., Current Biology, 2009).",
+        "source_urls": [
+          "https://www.nationalgeographic.com/science/article/cats-manipulate-their-owners-with-a-cry-embedded-in-a-purr"
+        ],
+        "why_care": "Every cat owner has been woken by it.",
+        "scores": {
+          "curiosity": 9,
+          "clarity": 8,
+          "visual": 7,
+          "evidence": 7
+        }
+      },
+      {
+        "premise": "How a 4 kg animal makes a 25 Hz sound.",
+        "key_fact": "Excised cat larynges purred at ~25–30 Hz without neural input; connective-tissue pads in the vocal folds help (Herbst et al., Current Biology, 2023).",
+        "source_urls": [
+          "https://medienportal.univie.ac.at/en/media/recent-press-releases/detailansicht-en/artikel/cats-purr-differently-than-previously-thought"
+        ],
+        "why_care": "It overturns the textbook explanation.",
+        "scores": {
+          "curiosity": 8,
+          "clarity": 7,
+          "visual": 8,
+          "evidence": 8
+        }
+      }
+    ],
+    "pick_index": 0,
+    "pick_reason": "Combine both: open on the hidden cry (strong hook), explain the mechanism, pay off with the request."
+  },
+  "script": {
+    "title": "Your Cat's Purr Is Hiding a Cry",
+    "hook": "Your cat's purr hides a cry you can't ignore.",
+    "chapters": [
+      {
+        "title": "The secret in the purr",
+        "beats": [
+          {
+            "text": "Your cat's purr hides a cry you can't ignore.",
+            "is_hook": true
+          },
+          {
+            "text": "Purring is a deep rumble, as low as twenty-five hertz, made in the voice box.",
+            "is_hook": false
+          },
+          {
+            "text": "In 2023, researchers in Vienna found tiny pads inside cats' vocal folds that let such a small animal hum that low.",
+            "is_hook": false
+          },
+          {
+            "text": "And when your cat wants breakfast, it slips a high, baby-like cry into the purr.",
+            "is_hook": false
+          },
+          {
+            "text": "Listeners rate that purr as more urgent.",
+            "is_hook": false
+          },
+          {
+            "text": "So that rumble isn't only contentment. Sometimes, it's a request.",
+            "is_hook": false
+          }
+        ]
+      }
+    ],
+    "full_text": "Your cat's purr hides a cry you can't ignore. Purring is a deep rumble, as low as twenty-five hertz, made in the voice box. In 2023, researchers in Vienna found tiny pads inside cats' vocal folds that let such a small animal hum that low. And when your cat wants breakfast, it slips a high, baby-like cry into the purr. Listeners rate that purr as more urgent. So that rumble isn't only contentment. Sometimes, it's a request.",
+    "on_screen_terms": [
+      "25 Hz",
+      "vocal fold pads",
+      "solicitation purr"
+    ],
+    "pronunciation_hints": [
+      {
+        "term": "Vienna",
+        "say_as": "vee-EN-uh"
+      }
+    ],
+    "claims": [
+      {
+        "text": "Purrs reach frequencies as low as about 25 Hz.",
+        "source_url": "https://www.scientificamerican.com/article/why-do-cats-purr/"
+      },
+      {
+        "text": "2023 Vienna study found pads in cat vocal folds enabling low purring frequencies.",
+        "source_url": "https://medienportal.univie.ac.at/en/media/recent-press-releases/detailansicht-en/artikel/cats-purr-differently-than-previously-thought"
+      },
+      {
+        "text": "Solicitation purrs embed a cry rated as more urgent by listeners.",
+        "source_url": "https://www.nationalgeographic.com/science/article/cats-manipulate-their-owners-with-a-cry-embedded-in-a-purr"
+      }
+    ]
+  },
+  "plan": {
+    "characters": [
+      {
+        "ref_tag": "CHAR_A",
+        "name": "Miso",
+        "description": "a small round orange tabby cat with a cream-white chest and muzzle, big green eyes, short tail with darker rings, and a teal collar with a small gold bell"
+      }
+    ],
+    "scenes": [
+      {
+        "word_start": 0,
+        "word_end": 8,
+        "shot_type": "close",
+        "visual_prompt": "CHAR_A curled on a cozy sofa cushion, eyes half closed, soft concentric sound-wave rings radiating from its throat; one ring subtly shaped like a tiny crying face",
+        "motion_prompt": "slow push-in toward the cat; sound rings pulse outward gently",
+        "characters": [
+          "CHAR_A"
+        ],
+        "location_key": "living_room",
+        "on_screen_text": null,
+        "animate_priority": 0.9
+      },
+      {
+        "word_start": 9,
+        "word_end": 23,
+        "shot_type": "diagram",
+        "visual_prompt": "side-view cutaway of CHAR_A sitting upright, its throat shown as a simple see-through window where a small teal voice box glows, wide slow wavy lines flowing out from the throat across the frame; plain warm cream background filling the whole frame",
+        "motion_prompt": "gentle pan along the throat; wavy lines ripple slowly",
+        "characters": [
+          "CHAR_A"
+        ],
+        "location_key": "diagram",
+        "on_screen_text": "25 Hz",
+        "animate_priority": 0.6
+      },
+      {
+        "word_start": 24,
+        "word_end": 44,
+        "shot_type": "diagram",
+        "visual_prompt": "a friendly science-lab bench with a big clear glass model of a cat's voice box shaped like a short pink tube; inside it two soft pink curtain-like flaps (the vocal folds), each with a small round coral cushion stuck to it, glowing softly; a magnifying glass on a stand points at the cushions; simple flasks in the background; no people",
+        "motion_prompt": "slow push-in through the magnifying glass toward the two coral cushions; the pink flaps flutter gently",
+        "characters": [],
+        "location_key": "lab",
+        "on_screen_text": "vocal fold pads",
+        "animate_priority": 0.7
+      },
+      {
+        "word_start": 45,
+        "word_end": 59,
+        "shot_type": "medium",
+        "visual_prompt": "CHAR_A sitting beside an empty food bowl on a kitchen floor at sunrise, looking up with huge pleading eyes, a thin high zigzag line woven into a thick low wave coming from its mouth",
+        "motion_prompt": "camera tilts up from the empty bowl to the cat's face; the zigzag line flickers",
+        "characters": [
+          "CHAR_A"
+        ],
+        "location_key": "kitchen",
+        "on_screen_text": null,
+        "animate_priority": 1
+      },
+      {
+        "word_start": 60,
+        "word_end": 76,
+        "shot_type": "wide",
+        "visual_prompt": "a human hand (no face visible) pouring kibble into the bowl while CHAR_A rubs against a leg, warm sunrise kitchen, a small speech-bubble-free heart shape above the cat",
+        "motion_prompt": "slow lateral pan; kibble falls; the cat's tail swishes",
+        "characters": [
+          "CHAR_A"
+        ],
+        "location_key": "kitchen",
+        "on_screen_text": "solicitation purr",
+        "animate_priority": 0.8
+      }
+    ],
+    "music_prompt": "playful, curious pizzicato strings and soft marimba, light and warm, no vocals, steady 100 bpm"
+  },
+  "authored_by": "claude-session (manual LLM mode)",
+  "authored_at": "2026-10-11T07:27:59.337Z",
+  "revised_at": "2026-10-11T08:16:34.295Z"
+}

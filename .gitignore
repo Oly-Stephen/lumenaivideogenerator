@@ -1,0 +1,22 @@
+node_modules/
+.next/
+dist/
+coverage/
+*.log
+
+# secrets
+.env
+.env.*
+!.env.example
+supabase/.temp/
+supabase/.branches/
+supabase/functions/.env
+
+# recorded provider responses can contain signed URLs; keep metadata only
+fixtures/**/*.mp4
+fixtures/**/*.png
+fixtures/**/*.wav
+fixtures/**/*.mp3
+
+# recorded fal results reference this machine's R2 objects and generated-media URLs
+fixtures/fal/
