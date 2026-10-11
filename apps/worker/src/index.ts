@@ -14,7 +14,7 @@ const cfg = loadConfig();
 await mkdir(cfg.tmpDir, { recursive: true });
 const db = new pg.Pool({ connectionString: cfg.databaseUrl, max: 6 });
 const storage = new Storage(cfg.r2);
-const ctx: Ctx = { cfg, db, storage, fal: new FalClient(cfg, db, storage), llm: createLlmProvider(cfg.fixturesDir) };
+const ctx: Ctx = { cfg, db, storage, fal: new FalClient(cfg, db, storage), llm: createLlmProvider(cfg.fixturesDir, cfg.mode) };
 
 // M1: the orchestrator drives each project; llm/ingest/render queues are reserved for the M2+ split.
 const handlers: Record<WorkerQueue, Handler> = {
@@ -90,5 +90,5 @@ async function shutdown(signal: string): Promise<void> {
 process.on("SIGINT", () => void shutdown("SIGINT"));
 process.on("SIGTERM", () => void shutdown("SIGTERM"));
 
-console.log(`worker started (PROVIDER_MODE=${cfg.mode}); queues:`, WORKER_QUEUES.join(", "));
+console.log(`worker started (PROVIDER_MODE=${cfg.mode}, LLM=${ctx.llm.name}); queues:`, WORKER_QUEUES.join(", "));
 void loop();

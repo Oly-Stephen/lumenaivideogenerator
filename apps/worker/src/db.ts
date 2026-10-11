@@ -22,6 +22,9 @@ export interface ProjectRow {
   subtitles: boolean;
   music: boolean;
   autopilot: boolean;
+  llm_tier: "standard" | "high";
+  estimate_credits: number | null;
+  budget_cap_credits: number | null;
   status: string;
   project_seed: string; // bigint
   current_script_id: string | null;

@@ -11,6 +11,7 @@ import type { Storage } from "../storage.ts";
 import { fetchRetry } from "../net.ts";
 
 export class BudgetExceededError extends Error {}
+export class CanceledError extends Error {}
 export class ReplayMissError extends Error {}
 
 export interface FalCall {
@@ -53,6 +54,46 @@ export class FalClient {
   private sem: Semaphore;
   constructor(private cfg: Config, private db: Db, private storage: Storage) {
     this.sem = new Semaphore(cfg.falMaxInflight);
+  }
+
+  private async isCanceled(projectId: string): Promise<boolean> {
+    const { rows } = await this.db.query<{ status: string }>("select status from public.projects where id = $1", [projectId]);
+    return rows[0]?.status === "canceled";
+  }
+
+  /** Per-project guards: canceled, project budget cap, and the user's credit balance (no spending past zero). */
+  async assertProject(projectId: string, estUsd: number): Promise<void> {
+    const { rows } = await this.db.query<{ status: string; spent: number; cap: number | null; held: number; balance: number; markup: string }>(
+      `select p.status, p.spent_credits as spent, p.budget_cap_credits as cap,
+              (coalesce(-sum(l.delta) filter (where l.reason = 'reservation' and l.project_id = p.id), 0)
+               - coalesce(sum(l.delta) filter (where l.reason = 'reservation_release' and l.project_id = p.id), 0))::int as held,
+              coalesce(sum(l.delta), 0)::int as balance,
+              (select credit_markup from public.app_config) as markup
+         from public.projects p left join public.credits_ledger l on l.user_id = p.user_id
+        where p.id = $1 group by p.id`, [projectId]);
+    const r = rows[0];
+    if (!r) throw new Error("project not found");
+    if (r.status === "canceled") throw new CanceledError("project canceled");
+    const credits = Math.ceil(estUsd * 100 * Number(r.markup ?? 1));
+    if (r.cap !== null && r.spent + credits > r.cap) {
+      throw new BudgetExceededError(`project budget cap: ${r.spent} + ${credits} > ${r.cap} credits`);
+    }
+    if (r.held < credits && r.balance < credits) {
+      throw new BudgetExceededError(`insufficient credits: balance ${r.balance}, this step needs ~${credits}`);
+    }
+  }
+
+  private async cancelRequest(endpoint: string, requestId: string, jobId: string): Promise<void> {
+    await fetch(`${FAL_QUEUE}/${endpoint}/requests/${requestId}/cancel`, { method: "PUT", headers: this.headers() }).catch(() => undefined);
+    await this.db.query("update public.jobs set status = 'canceled', finished_at = now() where id = $1", [jobId]);
+  }
+
+  /** Cancel every submitted/in-progress fal request of a canceled project (queue entries are dropped; running ones may still finish). */
+  async cancelInFlight(projectId: string): Promise<void> {
+    const { rows } = await this.db.query<{ id: string; endpoint: string; fal_request_id: string }>(
+      "select id, endpoint, fal_request_id from public.jobs where project_id = $1 and provider = 'fal' and status in ('submitted','in_progress') and fal_request_id is not null", [projectId]);
+    for (const j of rows) await this.cancelRequest(j.endpoint, j.fal_request_id, j.id);
+    await this.db.query("update public.jobs set status = 'canceled' where project_id = $1 and status in ('queued','submitting')", [projectId]);
   }
 
   private headers() {
@@ -139,6 +180,7 @@ export class FalClient {
       let statusUrl: string, responseUrl: string;
       if (!requestId) {
         await this.assertBudget(call.estUsd);
+        await this.assertProject(call.projectId, call.estUsd);
         await this.db.query("update public.jobs set status = 'submitting', attempts = attempts + 1 where id = $1", [job.id]);
         const res = await fetchRetry(`${FAL_QUEUE}/${call.endpoint}`, { method: "POST", headers: this.headers(), body: JSON.stringify(call.input) }, { label: `fal submit ${call.endpoint}` });
         if (!res.ok) {
@@ -157,6 +199,10 @@ export class FalClient {
       let delay = 2000;
       const deadline = Date.now() + 15 * 60_000;
       for (;;) {
+        if (await this.isCanceled(call.projectId)) {
+          await this.cancelRequest(call.endpoint, requestId, job.id);
+          throw new CanceledError("project canceled");
+        }
         const st = (await (await fetchRetry(statusUrl, { headers: this.headers() }, { retryOnStatus: true, label: "fal status" })).json()) as { status: string; error?: string; error_type?: string };
         if (st.status === "IN_PROGRESS") await this.db.query("update public.jobs set status = 'in_progress', started_at = coalesce(started_at, now()) where id = $1 and status = 'submitted'", [job.id]);
         if (st.status === "COMPLETED") {
@@ -183,6 +229,7 @@ export class FalClient {
 
       await this.db.query("update public.jobs set status = 'succeeded', output = $2, cost_usd = est_cost_usd, finished_at = now() where id = $1",
         [job.id, JSON.stringify({ raw, r2_keys: outputs.keys })]);
+      await this.db.query("select public.ledger_charge($1)", [job.id]); // hold → charge (idempotent)
       await mkdir(join(this.cfg.fixturesDir, "fal"), { recursive: true });
       await writeFile(fixturePath, JSON.stringify({ endpoint: call.endpoint, kind: call.kind, request_id: requestId, raw, r2_keys: outputs.keys, recorded_at: new Date().toISOString() }, null, 2));
       return { jobId: job.id, raw, keys: outputs.keys };

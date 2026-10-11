@@ -29,7 +29,8 @@ export async function createProject(_prev: CreateState, form: FormData): Promise
       voice_id: String(form.get("voice_id") ?? "") || null,
       subtitles: form.get("subtitles") === "on",
       music: form.get("music") === "on",
-      autopilot: true,
+      autopilot: form.get("autopilot") === "on",
+      llm_tier: form.get("llm_tier") === "high" ? "high" : "standard",
     })
     .select("id")
     .single();

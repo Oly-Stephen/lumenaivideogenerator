@@ -1,7 +1,7 @@
 # Resume Point
 
 **Last updated:** 2026-10-11
-**Status:** M1 COMPLETE (D016). fal spend $2.97 of $9. The worker runs locally in live mode. Next: M2 (script/plan approval, redo scene, credits ledger) once the user confirms; Claude provider when the Anthropic key is added.
+**Status:** M2 built and verified in mock (D017). Pending: live verification (Claude-written Budget Short + one real redo), with the user's OK. fal spend $2.97 of $9; user credits 600.
 
 ## Done
 - Step 0: REA installed (DECISIONS D001 and D002).

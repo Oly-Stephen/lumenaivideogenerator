@@ -207,3 +207,28 @@
   - duplicate webhook idempotent ✓ (DB-level test; M1 polls)
   - cost: Standard $2.04 (limit $3.50) ✓, Budget $0.89 (limit $1) ✓
 - **Not yet measured:** caption sync within ±150 ms as a numeric metric. It's correct on visual review.
+
+## 2026-10-12 — D017: M2 (Claude provider, approvals with cost, redo, cancel, credits ledger)
+- **Claude provider** (`@anthropic-ai/sdk` 0.128.0, ≥2 weeks old):
+  - research uses `web_search_20260209` with free-text notes
+  - script and plan use `beta.messages.parse` + `zodOutputFormat`
+  - default models are Sonnet 5.5 per step; Opus 5.5 for "High-quality writing" and as the escalation after two failed plan validations
+  - refusal fallback `fallbacks:"default"`
+  - usage is recorded as `jobs` (provider `anthropic`) and charged in credits; separate cap `LLM_DAILY_BUDGET_USD`
+  - mock mode and `LLM_PROVIDER=manual` never call Claude
+- **Credits:** 1 credit = $0.01 × `app_config.credit_markup`.
+  - The ledger functions `ledger_reserve` / `ledger_charge` / `ledger_settle` / `admin_grant` / `admin_refund` lock the profile row.
+  - A plan approval holds the estimate. Each finished job turns part of the hold into a charge. Completion, failure, and cancel release the rest.
+  - The user received a 600-credit grant (`scripts/grant-credits.ts`).
+- **Estimate:** shared in `packages/core/src/estimate.ts` (words ÷ 2.5, H3 duration rules, +15% buffer). It covers what was actually paid: Standard $2.48 estimated vs $2.04 paid, Budget $1.10 vs $0.89.
+- **Fixes found by tests:**
+  - (a) Ledger FK nulling: the append-only trigger now allows `ON DELETE SET NULL` only.
+  - (b) **Cancel is final:** a trigger keeps `canceled` even if a worker step finishes afterwards. This was a real race, caught by E2E.
+  - (c) The daily cap counts charges today plus holds outstanding, not gross reservations.
+- **Tests:**
+  - 49 unit tests
+  - 19 ledger/RPC SQL checks plus 3 FK checks (rolled back)
+  - a concurrency test: two sessions reserving 400 of 600, so B waits for A's lock and is rejected
+  - mock E2E 13/13 (`scripts/e2e-m2.ts`), including a redo with re-assembly in 48 s
+- **Advisor:** the new `rpc_*` SECURITY DEFINER warnings are intentional (user-facing, each checks `auth.uid()` ownership and status). Leaked-password protection is an Auth setting the user enables in the dashboard.
+- **Follow-up for M7:** deleting a whole user account must bypass the append-only ledger trigger (cascade delete).

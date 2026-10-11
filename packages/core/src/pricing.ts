@@ -52,3 +52,27 @@ export function estimateUsd(c: CostInput): number {
 export function usdToCredits(usd: number, markup = 1): number {
   return Math.ceil(usd * 100 * markup);
 }
+
+// ---- Claude API (per 1M tokens), from the Claude API reference cached 2026-10-06 ----
+export interface LlmPrice { input: number; output: number; cacheRead: number; cacheWrite: number }
+export const LLM_PRICES: Record<string, LlmPrice> = {
+  "claude-sonnet-5-5": { input: 2, output: 10, cacheRead: 0.2, cacheWrite: 2.5 },
+  "claude-haiku-5-5": { input: 0.1, output: 0.5, cacheRead: 0.01, cacheWrite: 0.125 },
+  "claude-opus-5-5": { input: 4, output: 20, cacheRead: 0.2, cacheWrite: 5 },
+};
+
+export interface LlmUsage {
+  input_tokens: number;
+  output_tokens: number;
+  cache_read_input_tokens?: number | null;
+  cache_creation_input_tokens?: number | null;
+}
+
+export function llmCostUsd(model: string, u: LlmUsage): number {
+  const p = LLM_PRICES[model];
+  if (!p) throw new Error(`no LLM price for ${model}`);
+  return (
+    (u.input_tokens * p.input + u.output_tokens * p.output +
+      (u.cache_read_input_tokens ?? 0) * p.cacheRead + (u.cache_creation_input_tokens ?? 0) * p.cacheWrite) / 1_000_000
+  );
+}

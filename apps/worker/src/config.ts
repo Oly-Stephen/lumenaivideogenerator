@@ -27,6 +27,7 @@ export interface Config {
   falMaxInflight: number;
   falTotalBudgetUsd: number;
   dailyBudgetUsd: number;
+  llmDailyBudgetUsd: number;
   endpoints: { image: string; imageT2I: string; video: string; videoFallback: string; music: string; stt: string };
   testMotionRes: string;
   tmpDir: string;
@@ -46,6 +47,7 @@ export function loadConfig(): Config {
     falMaxInflight: num("FAL_MAX_INFLIGHT", 2),
     falTotalBudgetUsd: num("FAL_TOTAL_BUDGET_USD", 9),
     dailyBudgetUsd: num("GLOBAL_DAILY_SPEND_USD", 3),
+    llmDailyBudgetUsd: num("LLM_DAILY_BUDGET_USD", 2),
     endpoints: {
       image: str("IMAGE_ENDPOINT", "google/nano-banana-2.1/edit"),
       imageT2I: str("IMAGE_T2I_ENDPOINT", "google/nano-banana-2.1"),

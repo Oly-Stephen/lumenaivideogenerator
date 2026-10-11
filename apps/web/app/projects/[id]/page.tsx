@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { requireUser } from "@/lib/server";
 import { ProjectLive } from "./ProjectLive";
+import { PROJECT_COLUMNS, type Project } from "./types";
 
 export const dynamic = "force-dynamic";
 
@@ -9,9 +10,9 @@ export default async function ProjectPage({ params }: { params: Promise<{ id: st
   const { supabase } = await requireUser();
   const { data: project } = await supabase
     .from("projects")
-    .select("id, title, input_text, format, quality, status, status_detail, progress, final_render_id, error")
+    .select(PROJECT_COLUMNS)
     .eq("id", id)
     .maybeSingle();
   if (!project) notFound();
-  return <ProjectLive initial={project} />;
+  return <ProjectLive initial={project as Project} />;
 }

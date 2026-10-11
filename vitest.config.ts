@@ -2,7 +2,7 @@ import { defineConfig } from "vitest/config";
 
 export default defineConfig({
   test: {
-    include: ["packages/*/test/**/*.test.ts", "supabase/functions/_shared/**/*.test.ts"],
+    include: ["packages/*/test/**/*.test.ts", "apps/worker/test/**/*.test.ts", "supabase/functions/_shared/**/*.test.ts"],
     environment: "node",
   },
 });

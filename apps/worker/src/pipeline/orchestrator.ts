@@ -1,17 +1,17 @@
-// M1 orchestrator (docs/03 §3): one step per `orchestrate` message; each step persists its results and
+// Orchestrator (docs/03 §3, M2): one step per `orchestrate` message; each step persists its results and
 // enqueues the next message, so a crash resumes from the last completed step.
 import { mkdir, rm, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import {
-  alignTokens, deriveSeed, estimateUsd, getPreset, renderStyleSystemPrompt, requestDurationS, styleSuffix,
-  timeScenes, tokenize, validatePlanAgainstTokens, type AlignedWord, type SttWord,
+  alignTokens, deriveSeed, estimateProject, estimateScene, estimateUsd, getPreset, renderStyleSystemPrompt, requestDurationS,
+  ScriptSchema, styleSuffix, timeScenes, tokenize, validatePlanAgainstTokens, type AlignedWord, type Script, type SttWord,
 } from "@lumen/core";
 import type { Config } from "../config.ts";
 import { assetKey, failProject, getProject, setDetail, setStatus, upsertAsset, type Db, type ProjectRow } from "../db.ts";
 import { ffmpeg, mockImage, mockTone, mockVideo, probe } from "../media.ts";
-import { BudgetExceededError, FalClient, ReplayMissError } from "../providers/fal.ts";
+import { BudgetExceededError, CanceledError, FalClient, ReplayMissError } from "../providers/fal.ts";
 import { fishTts } from "../providers/fish.ts";
-import { AwaitingAuthorError, type LlmProvider } from "../providers/llm.ts";
+import { AwaitingAuthorError, type LlmProvider, type ProjectBrief, type Track } from "../providers/llm.ts";
 import { render } from "../render.ts";
 import type { Storage } from "../storage.ts";
 import { send } from "../queue.ts";
@@ -42,8 +42,11 @@ export async function advance(ctx: Ctx, projectId: string): Promise<void> {
     switch (p.status) {
       case "researching":
       case "scripting":
+        return await stepScript(ctx, p);
       case "planning":
-        return await stepWrite(ctx, p);
+        return await stepPlan(ctx, p);
+      case "awaiting_plan_approval":
+        return await refreshEstimate(ctx, p); // user toggled animate/quality: recompute before they can approve
       case "locking_style":
         return await stepLockStyle(ctx, p);
       case "narrating":
@@ -54,10 +57,19 @@ export async function advance(ctx: Ctx, projectId: string): Promise<void> {
         return await stepMusic(ctx, p);
       case "rendering":
         return await stepRender(ctx, p);
+      case "canceled":
+        await ctx.fal.cancelInFlight(p.id);
+        await settle(ctx, p.id);
+        return;
       default:
         return; // terminal or waiting for a human
     }
   } catch (err) {
+    if (err instanceof CanceledError) {
+      await ctx.fal.cancelInFlight(p.id);
+      await settle(ctx, p.id);
+      return;
+    }
     if (err instanceof AwaitingAuthorError) {
       await setDetail(ctx.db, p.id, err.message);
       await send(ctx.db, "orchestrate", { project_id: p.id }, 30); // poll for the authored script
@@ -65,64 +77,123 @@ export async function advance(ctx: Ctx, projectId: string): Promise<void> {
     }
     if (err instanceof BudgetExceededError) {
       await setStatus(ctx.db, p.id, "paused_insufficient_credits", err.message);
+      await settle(ctx, p.id);
       return;
     }
     console.error(`[orchestrate] ${p.id} ${p.status} failed`, err);
     await failProject(ctx.db, p.id, err instanceof ReplayMissError ? new Error(`${err.message}`) : err, p.status);
+    await settle(ctx, p.id);
   }
 }
 
 const next = (ctx: Ctx, id: string) => send(ctx.db, "orchestrate", { project_id: id });
 
-// ---------------------------------------------------------------- 1. research + script + plan
-async function stepWrite(ctx: Ctx, p: ProjectRow): Promise<void> {
+/** Release whatever credits are still held for the project (idempotent). */
+async function settle(ctx: Ctx, projectId: string): Promise<void> {
+  await ctx.db.query("select public.ledger_settle($1)", [projectId]);
+}
+
+/** True when the user canceled since this step started — steps check before expensive work. */
+async function canceled(ctx: Ctx, projectId: string): Promise<boolean> {
+  const { rows } = await ctx.db.query<{ status: string }>("select status from public.projects where id = $1", [projectId]);
+  return rows[0]?.status === "canceled";
+}
+
+async function brief(ctx: Ctx, p: ProjectRow): Promise<ProjectBrief> {
+  const { rows } = await ctx.db.query<{ max_scenes_per_project: number }>("select max_scenes_per_project from public.app_config");
+  const preset = getPreset(p.style_preset);
+  return {
+    projectId: p.id, mode: p.input_mode, text: p.input_text, format: p.format, durationS: p.target_duration_s, language: p.language,
+    llmTier: p.llm_tier, styleSummary: `${preset.spec.medium}; palette ${preset.spec.palette.join(", ")}`,
+    maxScenes: rows[0]?.max_scenes_per_project ?? 12,
+  };
+}
+
+/** Records each Claude call as a job (cost from token usage) and charges credits for it. */
+function tracker(ctx: Ctx, p: ProjectRow): Track {
+  return async (u) => {
+    const { rows } = await ctx.db.query<{ id: string }>(
+      `insert into public.jobs (project_id, kind, provider, endpoint, idempotency_key, status, input, output, prompt_version, est_cost_usd, cost_usd, finished_at)
+       values ($1, $2, 'anthropic', $3, $4, 'succeeded', '{}', $5, $6, $7, $7, now()) returning id`,
+      [p.id, u.kind, u.model, `${u.kind}:${p.id}:${Date.now()}:${Math.random().toString(36).slice(2)}`,
+        JSON.stringify({ usage: u.usage }), u.promptVersion, u.costUsd.toFixed(4)]);
+    await ctx.db.query("select public.ledger_charge($1)", [rows[0]!.id]);
+  };
+}
+
+/** Separate daily cap for Claude spend (M2 plan Part A); the fal cap is unaffected. */
+async function assertLlmBudget(ctx: Ctx): Promise<void> {
+  const { rows } = await ctx.db.query<{ today: string }>(
+    "select coalesce(sum(cost_usd),0) as today from public.jobs where provider = 'anthropic' and created_at >= date_trunc('day', now())");
+  if (Number(rows[0]!.today) >= ctx.cfg.llmDailyBudgetUsd) {
+    throw new BudgetExceededError(`LLM daily cap reached ($${Number(rows[0]!.today).toFixed(2)} ≥ $${ctx.cfg.llmDailyBudgetUsd})`);
+  }
+}
+
+// ---------------------------------------------------------------- 1. research + script
+async function stepScript(ctx: Ctx, p: ProjectRow): Promise<void> {
   await setDetail(ctx.db, p.id, p.input_mode === "topic" ? "Researching the topic and writing the script…" : "Preparing your script…", 5);
-  const bundle = await ctx.llm.produce({ projectId: p.id, mode: p.input_mode, text: p.input_text });
-  const tokens = tokenize(bundle.script.full_text);
-  validatePlanAgainstTokens(bundle.plan, tokens.length);
-  const { rows: cfgRows } = await ctx.db.query<{ max_scenes_per_project: number }>("select max_scenes_per_project from public.app_config");
-  if (bundle.plan.scenes.length > (cfgRows[0]?.max_scenes_per_project ?? 12)) throw new Error("plan exceeds the scene cap");
+  if (ctx.llm.name === "claude" && p.input_mode === "topic") await assertLlmBudget(ctx);
+  const res = await ctx.llm.produceScript(await brief(ctx, p), tracker(ctx, p));
+  if (await canceled(ctx, p.id)) return;
+  const tokens = tokenize(res.script.full_text);
+  const { rows } = await ctx.db.query<{ id: string }>(
+    `insert into public.scripts (project_id, version, source, language, prompt_version, research, hook, body, full_text, word_count, est_duration_s)
+     values ($1, coalesce((select max(version) from public.scripts where project_id = $1), 0) + 1, 'ai', $2, $3, $4, $5, $6, $7, $8, $9)
+     returning id`,
+    [p.id, p.language, res.source, JSON.stringify(res.research), res.script.hook, JSON.stringify(res.script),
+      res.script.full_text, tokens.length, (tokens.length / 2.5).toFixed(2)]);
+  const nextStatus = p.autopilot ? "planning" : "awaiting_script_approval";
+  await ctx.db.query(
+    "update public.projects set current_script_id = $2, title = coalesce(title, $3), status = $4::public.project_status, status_detail = $5, progress = $6 where id = $1",
+    [p.id, rows[0]!.id, res.script.title, nextStatus, p.autopilot ? "Planning scenes…" : "Script ready for your review", p.autopilot ? 12 : 10]);
+  if (p.autopilot) await next(ctx, p.id);
+}
+
+// ---------------------------------------------------------------- 2. scene plan + estimate (+ reservation on autopilot)
+async function stepPlan(ctx: Ctx, p: ProjectRow): Promise<void> {
+  await setDetail(ctx.db, p.id, "Planning scenes…", 12);
+  const { rows: sr } = await ctx.db.query<{ id: string; body: unknown; full_text: string }>(
+    "select id, body, full_text from public.scripts where id = $1", [p.current_script_id]);
+  const s = sr[0];
+  if (!s) throw new Error("no current script");
+  // user edits keep the original structure but replace the narration (rpc_submit_script_edit)
+  const script: Script = ScriptSchema.parse({ ...(s.body as object), full_text: s.full_text });
+  if (ctx.llm.name === "claude") await assertLlmBudget(ctx);
+  const plan = await ctx.llm.producePlan(await brief(ctx, p), script, tracker(ctx, p));
+  if (await canceled(ctx, p.id)) return;
+  const tokens = tokenize(script.full_text);
+  validatePlanAgainstTokens(plan, tokens.length);
 
   const client = await ctx.db.connect();
   try {
     await client.query("begin");
-    const scr = await client.query<{ id: string }>(
-      `insert into public.scripts (project_id, version, source, language, prompt_version, research, hook, body, full_text, word_count, est_duration_s)
-       values ($1, 1, 'ai', $2, $3, $4, $5, $6, $7, $8, $9)
-       on conflict (project_id, version) do update set body = excluded.body returning id`,
-      [p.id, p.language, bundle.source, JSON.stringify({ research: bundle.research, music_prompt: bundle.plan.music_prompt }), bundle.script.hook, JSON.stringify(bundle.script),
-        bundle.script.full_text, tokens.length, (tokens.length / 2.5).toFixed(2)]);
-    const scriptId = scr.rows[0]!.id;
-    await client.query("delete from public.chapters where script_id = $1", [scriptId]);
+    await client.query("delete from public.chapters where script_id = $1", [s.id]);
     await client.query("insert into public.chapters (project_id, script_id, idx, title, narration) values ($1,$2,0,$3,$4)",
-      [p.id, scriptId, bundle.script.chapters[0]?.title ?? bundle.script.title, bundle.script.full_text]);
-
+      [p.id, s.id, script.chapters[0]?.title ?? script.title, script.full_text]);
     await client.query("delete from public.scenes where project_id = $1", [p.id]);
     await client.query("delete from public.characters where project_id = $1", [p.id]);
     const charIds = new Map<string, string>();
-    for (const c of bundle.plan.characters) {
+    for (const c of plan.characters) {
       const r = await client.query<{ id: string }>(
         "insert into public.characters (project_id, user_id, name, ref_tag, description) values ($1,$2,$3,$4,$5) returning id",
         [p.id, p.user_id, c.name, c.ref_tag, c.description]);
       charIds.set(c.ref_tag, r.rows[0]!.id);
     }
-
     // budget tier animates ~30% of scenes (highest priority); standard animates all
-    const ranked = [...bundle.plan.scenes.keys()].sort((a, b) => bundle.plan.scenes[b]!.animate_priority - bundle.plan.scenes[a]!.animate_priority);
+    const ranked = [...plan.scenes.keys()].sort((a, b) => plan.scenes[b]!.animate_priority - plan.scenes[a]!.animate_priority);
     const animateSet = new Set(p.quality === "budget" ? ranked.slice(0, Math.max(1, Math.round(ranked.length * 0.3))) : ranked);
-
-    for (const [i, s] of bundle.plan.scenes.entries()) {
+    for (const [i, sc] of plan.scenes.entries()) {
       await client.query(
         `insert into public.scenes (project_id, idx, narration, word_start, word_end, shot_type, visual_prompt, motion_prompt,
-           character_ids, location_key, on_screen_text, animate, seed)
-         values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)`,
-        [p.id, i, tokens.slice(s.word_start, s.word_end + 1).join(" "), s.word_start, s.word_end, s.shot_type, s.visual_prompt,
-          s.motion_prompt, s.characters.map((t) => charIds.get(t)!), s.location_key, s.on_screen_text, animateSet.has(i),
-          await deriveSeed(Number(p.project_seed), i, 1)]);
+           character_ids, location_key, on_screen_text, animate, animate_priority, seed)
+         values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14)`,
+        [p.id, i, tokens.slice(sc.word_start, sc.word_end + 1).join(" "), sc.word_start, sc.word_end, sc.shot_type, sc.visual_prompt,
+          sc.motion_prompt, sc.characters.map((t) => charIds.get(t)!), sc.location_key, sc.on_screen_text, animateSet.has(i),
+          sc.animate_priority, await deriveSeed(Number(p.project_seed), i, 1)]);
     }
-    await client.query("update public.projects set current_script_id = $2, title = coalesce(title, $3) where id = $1",
-      [p.id, scriptId, bundle.script.title]);
-    await client.query("update public.projects set status = 'locking_style', status_detail = 'Script ready — locking the visual style…', progress = 15 where id = $1", [p.id]);
+    await client.query("update public.scripts set research = coalesce(research, '{}'::jsonb) || jsonb_build_object('music_prompt', $2::text) where id = $1",
+      [s.id, plan.music_prompt]);
     await client.query("commit");
   } catch (e) {
     await client.query("rollback");
@@ -130,11 +201,48 @@ async function stepWrite(ctx: Ctx, p: ProjectRow): Promise<void> {
   } finally {
     client.release();
   }
-  // M1 runs on autopilot (approval checkpoints arrive in M2)
+
+  const est = await writeEstimate(ctx, p);
+  if (!p.autopilot) {
+    await setStatus(ctx.db, p.id, "awaiting_plan_approval", `Plan ready — about ${est} credits`, 15);
+    return;
+  }
+  await reserve(ctx, p.id, est);
+  await setStatus(ctx.db, p.id, "locking_style", "Locking the visual style…", 18);
   await next(ctx, p.id);
 }
 
-// ---------------------------------------------------------------- 2. style frame + character sheets
+/** Computes the estimate from the stored plan and writes it to the project. */
+async function writeEstimate(ctx: Ctx, p: ProjectRow): Promise<number> {
+  const { rows: scenes } = await ctx.db.query<{ words: number; animate: boolean }>(
+    "select (word_end - word_start + 1) as words, animate from public.scenes where project_id = $1 order by idx", [p.id]);
+  const { rows: ch } = await ctx.db.query<{ n: number }>("select count(*)::int as n from public.characters where project_id = $1 and sheet_asset_id is null", [p.id]);
+  const { rows: sb } = await ctx.db.query<{ has: boolean }>(
+    "select exists(select 1 from public.style_bibles where id = $1 and style_frame_asset_id is not null) as has", [p.style_bible_id]);
+  const est = estimateProject({
+    scenes: scenes.map((r) => ({ words: Number(r.words), animate: r.animate })), characters: ch[0]!.n, quality: p.quality, music: p.music,
+    needsStyleFrame: !sb[0]?.has, needsCharacterSheets: true, motionRes: ctx.cfg.testMotionRes,
+  });
+  await ctx.db.query("update public.projects set estimate_credits = $2, estimate = $3 where id = $1", [p.id, est.credits, JSON.stringify(est)]);
+  return est.credits;
+}
+
+async function refreshEstimate(ctx: Ctx, p: ProjectRow): Promise<void> {
+  const fresh = await getProject(ctx.db, p.id);
+  if (!fresh || fresh.status !== "awaiting_plan_approval") return;
+  const credits = await writeEstimate(ctx, fresh);
+  await setDetail(ctx.db, p.id, `Plan ready — about ${credits} credits`);
+}
+
+async function reserve(ctx: Ctx, projectId: string, credits: number): Promise<void> {
+  try {
+    await ctx.db.query("select public.ledger_reserve($1, $2)", [projectId, credits]);
+  } catch (e) {
+    throw new BudgetExceededError((e as Error).message);
+  }
+}
+
+// ---------------------------------------------------------------- 3. style frame + character sheets
 async function styleFor(ctx: Ctx, p: ProjectRow): Promise<{ id: string; system: string; frameAsset: string | null; seed: number; spec: ReturnType<typeof getPreset>["spec"] }> {
   const preset = getPreset(p.style_preset);
   const system = renderStyleSystemPrompt(preset.spec);
@@ -272,10 +380,21 @@ async function stepScenes(ctx: Ctx, p: ProjectRow): Promise<void> {
   const d = dims(p);
   let done = scenes.filter((s) => s.status === "ready").length;
 
+  // redo or retry after settlement: hold credits for the remaining scene work before spending
+  const pending = scenes.filter((s) => s.status !== "ready");
+  const { rows: held } = await ctx.db.query<{ n: number }>(
+    "select coalesce(-sum(delta) filter (where reason = 'reservation'), 0)::int - coalesce(sum(delta) filter (where reason = 'reservation_release'), 0)::int as n from public.credits_ledger where project_id = $1", [p.id]);
+  if (pending.length && (held[0]?.n ?? 0) <= 0 && ctx.cfg.mode !== "mock") {
+    const credits = pending.reduce((a, s) => a + estimateScene({ words: s.word_end - s.word_start + 1, animate: s.animate },
+      s.keyframe_asset_id ? "motion" : "both", ctx.cfg.testMotionRes).credits, 0);
+    await reserve(ctx, p.id, credits);
+  }
+
   const tagToName = (t: string) => t.replace(/CHAR_[A-Z]/g, (tag) => chars.find((c) => c.ref_tag === tag)?.name ?? tag);
 
   await Promise.all(scenes.map(async (s) => {
     if (s.status === "ready") return;
+    if (await canceled(ctx, p.id)) return;
     const sc = s.character_ids.map((id) => byId.get(id)!).filter(Boolean);
     let keyframeAsset = s.keyframe_asset_id;
     if (!keyframeAsset) {
@@ -349,7 +468,8 @@ function musicInput(endpoint: string, prompt: string, seconds: number, seed: num
   return { prompt, duration: seconds, seed };
 }
 async function stepMusic(ctx: Ctx, p: ProjectRow): Promise<void> {
-  if (p.music) {
+  const { rows: have } = await ctx.db.query("select 1 from public.assets where r2_key = $1", [pkey(p, "audio/music_bed.wav")]);
+  if (p.music && !have.length) {
     const { rows } = await ctx.db.query<{ total: number }>("select max(end_ms)::int as total from public.scenes where project_id = $1", [p.id]);
     const seconds = Math.ceil((rows[0]!.total ?? 30000) / 1000) + 1;
     const key = pkey(p, "audio/music_bed.wav");
@@ -410,6 +530,7 @@ async function stepRender(ctx: Ctx, p: ProjectRow): Promise<void> {
   }
   await ctx.db.query("update public.renders set asset_id = $2, status = 'succeeded' where id = $1", [renderId, assetId]);
   await ctx.db.query("update public.projects set final_render_id = $2, status = 'completed', status_detail = 'Done', progress = 100 where id = $1", [p.id, renderId]);
+  await settle(ctx, p.id);
   // poster frame for the project card
   const poster = join(work, "poster.jpg");
   await ffmpeg(["-ss", "1", "-i", out, "-frames:v", "1", "-vf", "scale=540:-1", poster]).catch(() => undefined);

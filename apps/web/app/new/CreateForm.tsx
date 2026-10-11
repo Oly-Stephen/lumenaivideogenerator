@@ -93,6 +93,16 @@ export function CreateForm({ voices, presets, maxDuration }: Props) {
           <label className="flex items-center gap-1"><input type="checkbox" name="subtitles" defaultChecked /> Captions</label>
           <label className="flex items-center gap-1"><input type="checkbox" name="music" defaultChecked /> Music</label>
         </div>
+        <div className="space-y-2 text-sm sm:col-span-2">
+          <label className="flex items-start gap-2">
+            <input type="checkbox" name="autopilot" className="mt-1" />
+            <span><span className="font-medium">Autopilot</span> — skip the script and plan reviews and generate straight away (credits are still held up front).</span>
+          </label>
+          <label className="flex items-start gap-2">
+            <input type="checkbox" name="llm_tier" value="high" className="mt-1" />
+            <span><span className="font-medium">High-quality writing</span> — use Claude Opus for research, script and plan (about 2× the writing cost; video cost unchanged).</span>
+          </label>
+        </div>
       </div>
 
       {state.error && <p className="text-sm text-red-600">{state.error}</p>}
