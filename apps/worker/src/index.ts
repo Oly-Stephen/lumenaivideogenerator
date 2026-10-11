@@ -12,7 +12,11 @@ type Handler = (msg: QueueMessage, db: pg.Pool) => Promise<void>;
 
 const cfg = loadConfig();
 await mkdir(cfg.tmpDir, { recursive: true });
-const db = new pg.Pool({ connectionString: cfg.databaseUrl, max: 6 });
+const db = new pg.Pool({ connectionString: cfg.databaseUrl, max: 6, idleTimeoutMillis: 30_000, keepAlive: true });
+// The pooler can reset idle connections (ECONNRESET). Without a listener, pg's 'error' event crashes the process;
+// with one, the dead client is discarded and the next query opens a fresh connection.
+db.on("error", (err) => console.warn("[db] idle connection error (discarded):", err.message));
+process.on("unhandledRejection", (err) => console.error("[worker] unhandled rejection:", err));
 const storage = new Storage(cfg.r2);
 const ctx: Ctx = { cfg, db, storage, fal: new FalClient(cfg, db, storage), llm: createLlmProvider(cfg.fixturesDir, cfg.mode) };
 

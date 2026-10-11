@@ -1,7 +1,7 @@
 # Resume Point
 
 **Last updated:** 2026-10-11
-**Status:** M2 built and verified in mock (D017). Pending: live verification (Claude-written Budget Short + one real redo), with the user's OK. fal spend $2.97 of $9; user credits 600.
+**Status:** M2 COMPLETE, including live verification (D019, D020). fal $6.45 of $15. Next: M3 (premium Omni tier + consistency experiment) or the quality follow-ups (short-scene routing to Wan, source-quality flags, auto-QA).
 
 ## Done
 - Step 0: REA installed (DECISIONS D001 and D002).

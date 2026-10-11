@@ -252,3 +252,15 @@
     - Steer the researcher to primary or high-reputation sources, and flag weak-source claims in Script Review.
     - Add "no calendars or dates" to diagram prompts.
     - Use the auto-QA pass (Haiku vision) once wired.
+
+## 2026-10-11 — D020: Live redo verified; worker crash on pooler reset fixed
+- **Live verification #2.** Redo scene #5 of the sleep video, with a new image and motion and a prompt asking for no calendars or text.
+  - Ledger: hold 34, charges 5 + 25, unused 4 released, outstanding 0.
+  - The new keyframe has no calendar, and the same fly character and style are kept.
+  - Only that scene was regenerated, and a new render was produced. **M2 live verification is complete.**
+- **Crash:** the Supabase pooler reset an idle connection (ECONNRESET). pg emits an 'error' event on the pool, and with no listener the Node process exited.
+  - Fix: `db.on('error')` and an `unhandledRejection` logger, plus `keepAlive` and an idle timeout.
+  - Verified by terminating the pool's backend from another session: the next query succeeds.
+- **Root cause of the "2024" calendar:** Claude's plan itself asked for "calendar page flipping to a year marker".
+  - The planner system prompt now forbids dates, years, numbers, calendars, clocks, signs, and documents in visuals, and suggests visual metaphors instead.
+- **fal total:** $6.45 / $15.

@@ -50,7 +50,9 @@ Write the narration.
 // ---------------------------------------------------------------- T3 scene plan
 export const PLAN_SYSTEM = `You are a storyboard artist for 2D explainer videos.
 You turn narration into shots that SHOW the idea — visual metaphors, simple diagrams, cause and effect — not literal talking heads.
-One idea per shot. Describe concrete, drawable things. Never ask for written words, labels, logos, brand names, or real people's likenesses.`;
+One idea per shot. Describe concrete, drawable things. Never ask for written words, labels, logos, brand names, or real people's likenesses.
+Never put dates, years, numbers, calendars, clocks with specific times, signs or documents in a scene: image models draw them wrong.
+Show time or quantity with visual metaphors instead (seasons changing, a growing pile, a sun arc), and leave exact figures to the narration.`;
 
 export function planUser(o: {
   indexedTokens: string; // "0:Your 1:cat's 2:purr ..."
