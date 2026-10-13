@@ -1,5 +1,6 @@
 // Issues short-lived presigned R2 URLs after an ownership check.
 //   POST { "asset_id": "<uuid>" }                                         -> GET url for playback/download
+//   POST { "asset_ids": ["<uuid>", ...] } (max 60)                        -> { urls: { id: url } } for thumbnails
 //   POST { "project_id": "<uuid>", "upload": { "content_type": "image/png", "ext": "png" } } -> PUT url + new asset id
 import { createClient } from "@supabase/supabase-js";
 import { presign, r2ConfigFromEnv } from "../_shared/r2.ts";
@@ -53,7 +54,7 @@ async function handle(req: Request): Promise<Response> {
   if (!who.user) return new Response("unauthorized", { status: 401 });
 
   const body = await req.json().catch(() => null) as
-    | { asset_id?: string; project_id?: string; upload?: { content_type?: string } }
+    | { asset_id?: string; asset_ids?: string[]; project_id?: string; upload?: { content_type?: string } }
     | null;
   if (!body) return new Response("bad json", { status: 400 });
 
@@ -61,6 +62,16 @@ async function handle(req: Request): Promise<Response> {
     const { data: asset } = await user.from("assets").select("id, r2_key").eq("id", body.asset_id).maybeSingle();
     if (!asset) return new Response("not found", { status: 404 });
     return Response.json({ url: await presign(r2, asset.r2_key, "GET", viewTtl), expires_in: viewTtl });
+  }
+
+  if (Array.isArray(body.asset_ids)) {
+    const ids = body.asset_ids.filter((x) => typeof x === "string").slice(0, 60);
+    if (!ids.length) return Response.json({ urls: {}, expires_in: viewTtl });
+    // RLS filters out assets the caller does not own
+    const { data: assets } = await user.from("assets").select("id, r2_key").in("id", ids);
+    const urls: Record<string, string> = {};
+    await Promise.all((assets ?? []).map(async (a) => { urls[a.id] = await presign(r2, a.r2_key, "GET", viewTtl); }));
+    return Response.json({ urls, expires_in: viewTtl });
   }
 
   if (body.project_id && body.upload?.content_type) {

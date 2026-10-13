@@ -1,19 +1,151 @@
 @import "tailwindcss";
 
+/* Design tokens (docs/04 §4). One neutral family (cool zinc), one accent (teal), one radius scale. */
 :root {
-  --bg: #fafaf7;
-  --fg: #16181d;
-  --muted: #5b6070;
-  --accent: #2a9d8f;
+  --bg: #fafafa;
+  --surface: #ffffff;
+  --surface-2: #f2f2f4;
+  --fg: #111114;
+  --fg-muted: #5f6170;
+  --border: rgb(17 17 20 / 0.09);
+  --border-strong: rgb(17 17 20 / 0.16);
+  --accent: #0d8478;
+  --accent-hover: #0a7066;
+  --accent-soft: rgb(13 132 120 / 0.1);
+  --on-accent: #ffffff;
+  --danger: #c4322b;
+  --danger-soft: rgb(196 50 43 / 0.08);
+  --warning: #9a6200;
+  --warning-soft: rgb(214 140 0 / 0.11);
+  --shadow: 0 1px 2px rgb(30 30 40 / 0.05), 0 8px 24px -8px rgb(30 30 40 / 0.12);
+  --bar: rgb(250 250 250 / 0.72);
+  --ease: cubic-bezier(0.32, 0.72, 0, 1);
+  color-scheme: light;
 }
+
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #111317;
-    --fg: #ececf1;
-    --muted: #9aa0ad;
+    --bg: #0b0b0d;
+    --surface: #141417;
+    --surface-2: #1c1c20;
+    --fg: #ededf0;
+    --fg-muted: #9a9cab;
+    --border: rgb(237 237 240 / 0.08);
+    --border-strong: rgb(237 237 240 / 0.16);
+    --accent: #3cc2b2;
+    --accent-hover: #5ad0c1;
+    --accent-soft: rgb(60 194 178 / 0.13);
+    --on-accent: #06201d;
+    --danger: #ff6b62;
+    --danger-soft: rgb(255 107 98 / 0.1);
+    --warning: #f0b445;
+    --warning-soft: rgb(240 180 69 / 0.11);
+    --shadow: 0 1px 2px rgb(0 0 0 / 0.4), 0 12px 32px -12px rgb(0 0 0 / 0.6);
+    --bar: rgb(11 11 13 / 0.7);
+    color-scheme: dark;
   }
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-fg: var(--fg);
+  --color-muted: var(--fg-muted);
+  --color-line: var(--border);
+  --color-line-strong: var(--border-strong);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-soft: var(--accent-soft);
+  --color-on-accent: var(--on-accent);
+  --color-danger: var(--danger);
+  --color-danger-soft: var(--danger-soft);
+  --color-warning: var(--warning);
+  --color-warning-soft: var(--warning-soft);
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+  --radius-control: 10px;
+  --radius-card: 14px;
+  --shadow-float: var(--shadow);
+  --ease-apple: var(--ease);
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
 }
 body {
   background: var(--bg);
   color: var(--fg);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Display type: tight leading, negative tracking as size grows (apple-design §15). */
+.display {
+  font-size: clamp(1.75rem, 3.2vw, 2.25rem);
+  line-height: 1.1;
+  letter-spacing: -0.022em;
+  font-weight: 600;
+}
+.title {
+  font-size: 1.125rem;
+  line-height: 1.3;
+  letter-spacing: -0.012em;
+  font-weight: 600;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Press feedback lives on pointer-down and is instant. */
+.press {
+  transition: transform 100ms ease-out, background-color 150ms ease, border-color 150ms ease, opacity 150ms ease;
+}
+.press:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+/* Translucent chrome: content scrolls underneath. */
+.material-bar {
+  background: var(--bar);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes shimmer {
+  from { background-position: -200% 0; }
+  to { background-position: 200% 0; }
+}
+@keyframes indeterminate {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(250%); }
+}
+.enter { animation: fade-up 280ms var(--ease) both; }
+.fade { animation: fade-in 400ms var(--ease) both; }
+.skeleton {
+  background: linear-gradient(90deg, var(--surface-2) 25%, color-mix(in oklab, var(--surface-2), var(--fg) 5%) 50%, var(--surface-2) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.6s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .enter, .fade { animation: fade-in 150ms ease both; }
+  .skeleton { animation: none; }
+  .press:active:not(:disabled) { transform: none; }
+  * { scroll-behavior: auto !important; }
+}
+@media (prefers-reduced-transparency: reduce) {
+  .material-bar { background: var(--bg); backdrop-filter: none; -webkit-backdrop-filter: none; }
 }

@@ -264,3 +264,16 @@
 - **Root cause of the "2024" calendar:** Claude's plan itself asked for "calendar page flipping to a year marker".
   - The planner system prompt now forbids dates, years, numbers, calendars, clocks, signs, and documents in visuals, and suggests visual metaphors instead.
 - **fal total:** $6.45 / $15.
+
+## 2026-10-11 — D021: UI/UX direction and design skills
+- **Vendored 4 MIT design skills into `.claude/skills/`** (sources and commits in `SOURCES.md`):
+  - `apple-design` (Emil Kowalski)
+  - `design-taste-frontend` (Leonxlnx)
+  - `hig-foundations` and `hig-patterns` (Raintree)
+- **How they were installed:** with `git clone` plus a manual review, instead of `npx skills add`, so no third-party installer was run.
+- **Direction** (`docs/04_UI_UX_RESEARCH.md`): a calm, Apple-like product UI.
+  - Taste dials 4/3/4: neutral zinc colours, one teal accent, Geist font, Phosphor icons, CSS-only motion.
+  - Cost is shown on every button that spends credits.
+  - The generating screen shows stages, and keyframes appear one by one as they finish.
+  - A Redo sheet with version history.
+- **Proposed new dependency:** `@phosphor-icons/react@2.1.10`. It is waiting for approval.

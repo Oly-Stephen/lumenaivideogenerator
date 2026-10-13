@@ -1,8 +1,11 @@
 "use client";
 
+import { Coins } from "@phosphor-icons/react";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { browserClient } from "@/lib/supabase";
+
+const LOW = 100;
 
 /** Header balance; updates live from the private `user:<id>` broadcast emitted on every ledger insert. */
 export function CreditBalance() {
@@ -31,10 +34,14 @@ export function CreditBalance() {
     };
   }, [supabase]);
 
-  if (balance === null) return null;
+  if (balance === null) return <span aria-hidden className="skeleton h-8 w-24 rounded-full" />;
+  const low = balance < LOW;
   return (
-    <Link href="/credits" className="rounded-full border border-black/10 px-3 py-1 text-sm dark:border-white/15" title="Credits (1 credit = $0.01)">
-      {balance.toLocaleString()} credits
+    <Link href="/credits" title="1 credit = $0.01 of generation cost"
+      className={`press fade inline-flex h-8 items-center gap-1.5 rounded-full px-3 text-[13px] font-medium tabular-nums ${low ? "bg-warning-soft text-warning" : "bg-surface-2 text-fg"}`}>
+      <Coins size={15} weight={low ? "fill" : "regular"} aria-hidden />
+      {balance.toLocaleString()}
+      <span className="sr-only"> credits{low ? ", running low" : ""}</span>
     </Link>
   );
 }

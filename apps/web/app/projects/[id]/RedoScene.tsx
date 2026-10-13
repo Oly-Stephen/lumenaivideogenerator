@@ -1,64 +1,88 @@
 "use client";
 
-import { useState } from "react";
-import type { SupabaseClient } from "@supabase/supabase-js";
 import { estimateScene, type RedoWhat } from "@lumen/core";
+import type { SupabaseClient } from "@supabase/supabase-js";
+import { useState } from "react";
+import { Button, Field, inputCls, Segmented, Sheet, Switch, useToast } from "@/components/ui";
 import type { Scene } from "./types";
 
 const MOTION_RES = process.env.NEXT_PUBLIC_TEST_MOTION_RES ?? "480P";
 
-export function RedoScene({ supabase, scene, balance, onDone }: { supabase: SupabaseClient; scene: Scene; balance: number | null; onDone: () => void }) {
-  const [open, setOpen] = useState(false);
-  const [what, setWhat] = useState<RedoWhat>(scene.animate ? "both" : "keyframe");
+/** Redo one scene: choose what to regenerate, optionally edit the prompt, see the price, confirm. */
+export function RedoSheet({ supabase, scene, balance, thumb, onClose, onDone }: {
+  supabase: SupabaseClient; scene: Scene; balance: number | null; thumb?: string; onClose: () => void; onDone: () => void;
+}) {
+  const toast = useToast();
+  const [what, setWhat] = useState<RedoWhat>("keyframe");
   const [visual, setVisual] = useState(scene.visual_prompt);
   const [motion, setMotion] = useState(scene.motion_prompt ?? "");
   const [newSeed, setNewSeed] = useState(true);
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState<string | null>(null);
 
-  const cost = estimateScene({ words: scene.word_end - scene.word_start + 1, animate: scene.animate }, what, MOTION_RES).credits;
+  const words = scene.word_end - scene.word_start + 1;
+  const cost = estimateScene({ words, animate: scene.animate }, what, MOTION_RES).credits;
   const short = balance !== null && balance < cost;
 
   async function go() {
     setBusy(true); setErr(null);
     const { error } = await supabase.rpc("rpc_regenerate_scene", {
       p_scene: scene.id, p_what: what,
-      p_visual_prompt: visual !== scene.visual_prompt ? visual : null,
-      p_motion_prompt: motion !== (scene.motion_prompt ?? "") ? motion : null,
+      p_visual_prompt: visual.trim() !== scene.visual_prompt ? visual.trim() : null,
+      p_motion_prompt: motion.trim() !== (scene.motion_prompt ?? "") ? motion.trim() : null,
       p_new_seed: newSeed,
     });
     setBusy(false);
     if (error) return setErr(error.message);
-    setOpen(false);
+    toast(`Redoing scene ${scene.idx + 1}. The video updates when it is done.`);
+    onClose();
     onDone();
   }
 
-  if (!open) return <button onClick={() => setOpen(true)} className="mt-2 text-xs underline">Redo scene…</button>;
   return (
-    <div className="mt-2 space-y-2 rounded-md border border-black/10 p-2 text-xs dark:border-white/15">
-      <div className="flex flex-wrap gap-2">
-        {(["keyframe", "motion", "both"] as const).filter((w) => scene.animate || w === "keyframe").map((w) => (
-          <label key={w} className="flex items-center gap-1">
-            <input type="radio" checked={what === w} onChange={() => setWhat(w)} />
-            {w === "keyframe" ? (scene.animate ? "New image (+ motion)" : "New image") : w === "motion" ? "New motion only" : "Both"}
-          </label>
-        ))}
+    <Sheet open onClose={onClose} title={`Redo scene ${scene.idx + 1}`}
+      footer={
+        <div className="flex items-center justify-between gap-4">
+          <p className="text-[13px] text-muted">{short ? <span className="text-danger">Not enough credits</span> : <>Balance {balance?.toLocaleString() ?? "..."}</>}</p>
+          <Button onClick={go} busy={busy} disabled={short || (what !== "motion" && !visual.trim())}>Redo, {cost} credits</Button>
+        </div>
+      }>
+      <div className="space-y-5">
+        <div className="flex gap-3">
+          {thumb && (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={thumb} alt="" className="h-24 w-auto shrink-0 rounded-[8px] object-cover ring-1 ring-line" />
+          )}
+          <p className="text-sm leading-snug text-muted">{scene.narration}</p>
+        </div>
+
+        {scene.animate && (
+          <Field label="What to redo" helper={what === "keyframe" ? "A new image, then new motion from it." : "Keep the image, generate new motion."}>
+            <Segmented label="What to redo" value={what === "both" ? "keyframe" : what} onChange={(v) => setWhat(v as RedoWhat)}
+              options={[{ value: "keyframe", label: "Image and motion" }, { value: "motion", label: "Motion only" }]} />
+          </Field>
+        )}
+
+        {what !== "motion" && (
+          <Field label="Image description" htmlFor="redo-visual" helper="Describe what should be in the frame. Avoid words, numbers and dates.">
+            <textarea id="redo-visual" rows={4} value={visual} onChange={(e) => setVisual(e.target.value)} className={inputCls} />
+          </Field>
+        )}
+        {scene.animate && (
+          <Field label="Motion" htmlFor="redo-motion">
+            <input id="redo-motion" value={motion} onChange={(e) => setMotion(e.target.value)} placeholder="Slow push-in, leaves drift" className={inputCls} />
+          </Field>
+        )}
+
+        <div className="flex items-center justify-between gap-4 rounded-[var(--radius-control)] bg-surface-2 px-3.5 py-3">
+          <div>
+            <p className="text-sm font-medium">New variation</p>
+            <p className="text-[13px] text-muted">Off keeps the same seed, useful when only the wording changed.</p>
+          </div>
+          <Switch checked={newSeed} onChange={setNewSeed} label="New variation" />
+        </div>
+        {err && <p role="alert" className="text-sm text-danger">{err}</p>}
       </div>
-      {what !== "motion" && (
-        <textarea value={visual} onChange={(e) => setVisual(e.target.value)} rows={3} className="w-full rounded border border-black/15 bg-transparent p-1 dark:border-white/20" />
-      )}
-      {scene.animate && (
-        <input value={motion} onChange={(e) => setMotion(e.target.value)} placeholder="Motion (camera / subject)" className="w-full rounded border border-black/15 bg-transparent p-1 dark:border-white/20" />
-      )}
-      <label className="flex items-center gap-1"><input type="checkbox" checked={newSeed} onChange={(e) => setNewSeed(e.target.checked)} /> New variation (new seed)</label>
-      {err && <p className="text-red-600">{err}</p>}
-      <div className="flex gap-2">
-        <button onClick={go} disabled={busy || short} className="rounded bg-[color:var(--accent)] px-2 py-1 font-medium text-white disabled:opacity-60">
-          {busy ? "…" : `Redo · ~${cost} credits`}
-        </button>
-        <button onClick={() => setOpen(false)} className="underline">Cancel</button>
-      </div>
-      {short && <p className="text-amber-700 dark:text-amber-300">Not enough credits.</p>}
-    </div>
+    </Sheet>
   );
 }

@@ -1,57 +1,39 @@
-import Link from "next/link";
 import { redirect } from "next/navigation";
 import { requireUser } from "@/lib/server";
+import { CreditHistory, type LedgerRow } from "./CreditHistory";
 
 export const dynamic = "force-dynamic";
-
-const REASON: Record<string, string> = {
-  grant: "Grant", purchase: "Purchase", reservation: "Held for generation", reservation_release: "Hold released",
-  charge: "Charged", refund: "Refund", adjustment: "Adjustment",
-};
+export const metadata = { title: "Credits" };
 
 export default async function CreditsPage() {
   const { supabase, user } = await requireUser();
   if (!user) redirect("/login");
   const { data: rows } = await supabase
     .from("credits_ledger")
-    .select("id, created_at, reason, delta, note, project_id, projects(title)")
+    .select("id, created_at, reason, delta, note, project_id, projects(title, input_text)")
     .order("id", { ascending: true })
-    .limit(500);
+    .limit(1000);
 
-  let running = 0;
-  const withBalance = (rows ?? []).map((r) => ({ ...r, balance: (running += r.delta) }));
-  const view = withBalance.reverse();
+  const ledger: LedgerRow[] = (rows ?? []).map((r) => {
+    // to-one embed; typed as an array by the untyped client
+    const rel = r.projects as unknown as { title: string | null; input_text: string } | { title: string | null; input_text: string }[] | null;
+    const proj = Array.isArray(rel) ? rel[0] : rel;
+    return { id: r.id, created_at: r.created_at, reason: r.reason, delta: r.delta, note: r.note, project_id: r.project_id, title: proj?.title ?? proj?.input_text ?? null };
+  });
+  const balance = ledger.reduce((a, r) => a + r.delta, 0);
 
   return (
-    <main className="mx-auto max-w-4xl px-4 py-8">
-      <h1 className="text-2xl font-semibold">Credits</h1>
-      <p className="mt-1 text-sm text-[color:var(--muted)]">
-        1 credit = $0.01 of generation cost. Credits are held when you approve a plan, charged per finished step, and any unused hold is released.
-      </p>
-      <p className="mt-4 text-lg">Balance: <span className="font-semibold">{running.toLocaleString()}</span> credits</p>
-      <div className="mt-6 overflow-x-auto">
-        <table className="w-full min-w-[560px] text-sm">
-          <thead className="text-left text-[color:var(--muted)]">
-            <tr><th className="py-2">When</th><th>What</th><th>Video</th><th className="text-right">Change</th><th className="text-right">Balance</th></tr>
-          </thead>
-          <tbody className="divide-y divide-black/10 dark:divide-white/10">
-            {view.map((r) => {
-              // to-one embed; typed as an array by the untyped client
-              const rel = r.projects as unknown as { title: string | null } | { title: string | null }[] | null;
-              const title = Array.isArray(rel) ? rel[0]?.title : rel?.title;
-              return (
-                <tr key={r.id}>
-                  <td className="py-2 whitespace-nowrap">{new Date(r.created_at).toLocaleString()}</td>
-                  <td>{REASON[r.reason] ?? r.reason}{r.note ? <span className="block text-xs text-[color:var(--muted)]">{r.note}</span> : null}</td>
-                  <td className="max-w-[200px] truncate">{r.project_id ? <Link className="underline" href={`/projects/${r.project_id}`}>{title ?? "video"}</Link> : "—"}</td>
-                  <td className={`text-right tabular-nums ${r.delta < 0 ? "" : "text-emerald-600"}`}>{r.delta > 0 ? "+" : ""}{r.delta}</td>
-                  <td className="text-right tabular-nums">{r.balance}</td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+    <main className="mx-auto max-w-3xl px-4 pt-8 pb-20 sm:px-6 sm:pt-12">
+      <h1 className="display">Credits</h1>
+      <div className="mt-6 rounded-[var(--radius-card)] border border-line bg-surface p-6">
+        <p className="text-[13px] font-medium text-muted">Balance</p>
+        <p className="mt-1 text-[44px] leading-none font-semibold tracking-[-0.03em] tabular-nums">{balance.toLocaleString()}</p>
+        <p className="mt-4 max-w-[60ch] text-sm text-muted">
+          One credit is one cent of generation cost. Credits are held when you approve a storyboard, charged as each step finishes,
+          and anything unused is returned when the video is done or canceled.
+        </p>
       </div>
+      <CreditHistory rows={ledger} />
     </main>
   );
 }
