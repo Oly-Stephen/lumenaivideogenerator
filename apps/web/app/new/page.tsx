@@ -1,5 +1,3 @@
-import { existsSync } from "node:fs";
-import path from "node:path";
 import { STYLE_PRESETS } from "@lumen/core";
 import { redirect } from "next/navigation";
 import { requireUser } from "@/lib/server";
@@ -17,11 +15,10 @@ export default async function NewPage({ searchParams }: { searchParams: Promise<
     supabase.from("credit_balances").select("balance").maybeSingle(),
     searchParams,
   ]);
-  // Real sample frames exported from finished videos (scripts/export-style-samples.ts); others use their palette.
-  const stylesDir = path.join(process.cwd(), "public", "styles");
+  // Every style has a sample frame in public/styles (scripts/export-style-samples.ts, generate-style-samples.ts).
+  // Served statically; not checked on disk, because hosted servers (Vercel) don't ship public/ with the function.
   const presets = STYLE_PRESETS.map((p) => ({
-    key: p.key, name: p.name, blurb: p.blurb, swatch: p.spec.palette,
-    image: existsSync(path.join(stylesDir, `${p.key}.jpg`)) ? `/styles/${p.key}.jpg` : null,
+    key: p.key, name: p.name, blurb: p.blurb, swatch: p.spec.palette, image: `/styles/${p.key}.jpg`,
   }));
   return (
     <CreateForm
