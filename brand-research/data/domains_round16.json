@@ -1,0 +1,86 @@
+{
+ "checked_at": "2026-10-13T12:21:24+00:00",
+ "results": {
+  "sinema": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered",
+   "video": "not registered",
+   "studio": "registered"
+  },
+  "sinemo": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "co": "not registered",
+   "video": "not registered",
+   "studio": "not registered"
+  },
+  "sinemi": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "co": "not registered",
+   "video": "not registered",
+   "studio": "not registered"
+  },
+  "sinemah": {
+   "com": "not registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "co": "not registered",
+   "video": "not registered",
+   "studio": "not registered"
+  },
+  "sinemio": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "co": "not registered",
+   "video": "not registered",
+   "studio": "not registered"
+  },
+  "sinemaly": {
+   "com": "not registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "co": "not registered",
+   "video": "not registered",
+   "studio": "not registered"
+  },
+  "mysinema": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "co": "not registered",
+   "video": "not registered",
+   "studio": "not registered"
+  },
+  "getsinema": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "co": "not registered",
+   "video": "not registered",
+   "studio": "not registered"
+  },
+  "sinemalab": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "co": "not registered",
+   "video": "not registered",
+   "studio": "not registered"
+  }
+ }
+}

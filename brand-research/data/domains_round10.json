@@ -1,0 +1,495 @@
+{
+ "checked_at": "2026-10-13T11:28:28+00:00",
+ "results": {
+  "koma": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "kado": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "fuda": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "kami": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "shoji": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "tela": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "carta": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "pano": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "mostra": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "not registered"
+  },
+  "tello": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "not registered"
+  },
+  "telo": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "talo": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "gisto": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "not registered"
+  },
+  "foldo": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "fabla": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "emi": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "lumo": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "lumi": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "vela": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "ojo": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "nami": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "yoru": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "kibo": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "kibi": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "tavi": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "tavo": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "pibo": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "not registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "bimo": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "vimo": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "mova": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "teli": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "tellu": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "miko": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "kiko": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "nilo": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "zeno": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "ivo": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "lio": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "fira": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "kova": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "sibo": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "noa": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "elo": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "zola": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "yuna": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "kimo": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "tilo": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "mimo": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "pixo": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "pavo": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "co": "registered"
+  },
+  "mivi": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "oro": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "ludo": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "kiri": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "bibo": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "juno": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "arlo": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "clio": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "wren": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "iris": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "pico": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "tellie": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "showy": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "ahoy": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "kobi": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "nuvo": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "vivi": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "ruma": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "tamo": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "siro": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  }
+ }
+}

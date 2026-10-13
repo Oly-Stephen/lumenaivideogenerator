@@ -10,14 +10,14 @@ const VARIANT: Record<Variant, string> = {
   danger: "bg-surface text-danger border border-line-strong hover:bg-danger-soft",
 };
 const SIZE: Record<Size, string> = {
-  sm: "h-8 px-3 text-[13px] gap-1.5",
-  md: "h-10 px-4 text-sm gap-2",
-  lg: "h-12 px-5 text-[15px] gap-2",
+  sm: "h-8 px-3.5 text-[13px] gap-1.5",
+  md: "h-10 px-5 text-sm gap-2",
+  lg: "h-12 px-6 text-[16px] gap-2",
 };
 
 /** Class string for buttons and button-styled links. */
 export function btn(variant: Variant = "primary", size: Size = "md", extra = "") {
-  return `press inline-flex shrink-0 items-center justify-center whitespace-nowrap rounded-[var(--radius-control)] font-medium disabled:pointer-events-none disabled:opacity-45 ${VARIANT[variant]} ${SIZE[size]} ${extra}`;
+  return `press inline-flex shrink-0 items-center justify-center whitespace-nowrap rounded-full font-medium disabled:pointer-events-none disabled:opacity-45 ${VARIANT[variant]} ${SIZE[size]} ${extra}`;
 }
 
 export const inputCls =

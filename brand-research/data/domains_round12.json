@@ -1,0 +1,257 @@
+{
+ "checked_at": "2026-10-13T11:38:40+00:00",
+ "results": {
+  "vixual": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "registered",
+   "co": "not registered"
+  },
+  "vixuals": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "co": "not registered"
+  },
+  "vixel": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "vizual": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "vizzual": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "not registered",
+   "io": "registered",
+   "co": "not registered"
+  },
+  "vixio": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "explayn": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "not registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "xplain": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "xplainr": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "not registered",
+   "io": "registered",
+   "co": "not registered"
+  },
+  "splainr": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "co": "not registered"
+  },
+  "splayn": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "co": "not registered"
+  },
+  "explainy": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "not registered",
+   "io": "not registered",
+   "co": "not registered"
+  },
+  "tellr": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "showr": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "framr": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "storii": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "storee": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "storyo": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "clarri": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "registered",
+   "co": "not registered"
+  },
+  "klarify": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "klarity": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "visuly": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "not registered",
+   "co": "not registered"
+  },
+  "vizly": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "vixly": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "explaino": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "not registered",
+   "co": "not registered"
+  },
+  "grasply": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "not registered",
+   "co": "registered"
+  },
+  "knowlo": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "not registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "whyvo": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "registered",
+   "io": "not registered",
+   "co": "not registered"
+  },
+  "illustr": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "not registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "picturo": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "co": "not registered"
+  },
+  "drawly": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "sketchr": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "not registered"
+  },
+  "lerna": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "lernly": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "not registered"
+  },
+  "teechr": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "skoolr": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "not registered",
+   "co": "registered"
+  }
+ }
+}

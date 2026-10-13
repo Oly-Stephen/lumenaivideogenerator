@@ -1,0 +1,325 @@
+{
+ "checked_at": "2026-10-13T10:20:42+00:00",
+ "results": {
+  "plico": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "video": "not registered",
+   "studio": "registered"
+  },
+  "plica": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "video": "not registered",
+   "studio": "registered"
+  },
+  "plicato": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "video": "not registered",
+   "studio": "not registered"
+  },
+  "plicata": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "video": "not registered",
+   "studio": "not registered"
+  },
+  "explicata": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "video": "not registered",
+   "studio": "not registered"
+  },
+  "explicare": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "not registered",
+   "io": "not registered",
+   "video": "not registered",
+   "studio": "not registered"
+  },
+  "unplica": {
+   "com": "not registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "video": "not registered",
+   "studio": "not registered"
+  },
+  "pliego": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "video": "not registered",
+   "studio": "not registered"
+  },
+  "whyfold": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "video": "not registered",
+   "studio": "not registered"
+  },
+  "kirivo": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "video": "not registered",
+   "studio": "not registered"
+  },
+  "kirigo": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "video": "not registered",
+   "studio": "not registered"
+  },
+  "gisto": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "video": "not registered",
+   "studio": "not registered"
+  },
+  "elucido": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "video": "not registered",
+   "studio": "not registered"
+  },
+  "didacto": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "video": "not registered",
+   "studio": "not registered"
+  },
+  "praxino": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "video": "not registered",
+   "studio": "not registered"
+  },
+  "thaumo": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "not registered",
+   "io": "not registered",
+   "video": "not registered",
+   "studio": "not registered"
+  },
+  "zoeto": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "video": "not registered",
+   "studio": "not registered"
+  },
+  "lanterra": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "not registered",
+   "io": "not registered",
+   "video": "not registered",
+   "studio": "not registered"
+  },
+  "prismo": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "video": "registered",
+   "studio": "registered"
+  },
+  "apertura": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "video": "not registered",
+   "studio": "registered"
+  },
+  "pithly": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "registered",
+   "io": "not registered",
+   "video": "not registered",
+   "studio": "not registered"
+  },
+  "kernl": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "video": "not registered",
+   "studio": "registered"
+  },
+  "graspy": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "video": "not registered",
+   "studio": "not registered"
+  },
+  "foliar": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "registered",
+   "video": "not registered",
+   "studio": "not registered"
+  },
+  "washio": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "registered",
+   "io": "registered",
+   "video": "not registered",
+   "studio": "not registered"
+  },
+  "tellum": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "video": "not registered",
+   "studio": "not registered"
+  },
+  "ahavo": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "video": "not registered",
+   "studio": "not registered"
+  },
+  "questo": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "video": "not registered",
+   "studio": "registered"
+  },
+  "inklin": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "registered",
+   "io": "registered",
+   "video": "not registered",
+   "studio": "not registered"
+  },
+  "cuecard": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "video": "not registered",
+   "studio": "registered"
+  },
+  "motes": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "video": "not registered",
+   "studio": "not registered"
+  },
+  "papelo": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "registered",
+   "io": "registered",
+   "video": "not registered",
+   "studio": "not registered"
+  },
+  "foldora": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "video": "not registered",
+   "studio": "not registered"
+  },
+  "foldio": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "not registered",
+   "video": "not registered",
+   "studio": "not registered"
+  },
+  "plyfold": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "registered",
+   "io": "not registered",
+   "video": "not registered",
+   "studio": "not registered"
+  },
+  "inkwhy": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "video": "not registered",
+   "studio": "not registered"
+  },
+  "whyline": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "registered",
+   "io": "not registered",
+   "video": "not registered",
+   "studio": "not registered"
+  },
+  "lumafold": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "video": "not registered",
+   "studio": "not registered"
+  },
+  "fablo": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "video": "not registered",
+   "studio": "not registered"
+  },
+  "taleflip": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "video": "not registered",
+   "studio": "not registered"
+  }
+ }
+}

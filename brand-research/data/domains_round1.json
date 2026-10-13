@@ -1,0 +1,371 @@
+{
+ "checked_at": "2026-10-13T10:04:27+00:00",
+ "results": {
+  "lumen": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered"
+  },
+  "kinora": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered"
+  },
+  "thauma": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered"
+  },
+  "zoetic": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered"
+  },
+  "oriel": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered"
+  },
+  "lanthorn": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered"
+  },
+  "kenno": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered"
+  },
+  "tellfold": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered"
+  },
+  "foldwise": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "not registered"
+  },
+  "chalkline": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered"
+  },
+  "inklet": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered"
+  },
+  "whyfly": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered"
+  },
+  "wondermill": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered"
+  },
+  "papermoon": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered"
+  },
+  "explico": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "not registered",
+   "io": "registered"
+  },
+  "narra": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered"
+  },
+  "tellora": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "not registered",
+   "io": "registered"
+  },
+  "cuvio": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered"
+  },
+  "quilla": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered"
+  },
+  "papyr": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered"
+  },
+  "zoetro": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "registered",
+   "io": "not registered"
+  },
+  "praxi": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered"
+  },
+  "kaleido": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered"
+  },
+  "glint": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered"
+  },
+  "kindling": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered"
+  },
+  "spindle": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered"
+  },
+  "weft": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered"
+  },
+  "plait": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered"
+  },
+  "corvid": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered"
+  },
+  "wren": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered"
+  },
+  "plover": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered"
+  },
+  "mosey": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered"
+  },
+  "brio": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered"
+  },
+  "sagely": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered"
+  },
+  "mentora": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered"
+  },
+  "lucent": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered"
+  },
+  "ahaa": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered"
+  },
+  "grokko": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered"
+  },
+  "whyzo": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "registered",
+   "io": "not registered"
+  },
+  "tellbird": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered"
+  },
+  "storyloom": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered"
+  },
+  "frameline": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered"
+  },
+  "kinetta": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "registered",
+   "io": "not registered"
+  },
+  "vellio": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered"
+  },
+  "orrery": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered"
+  },
+  "gnomon": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered"
+  },
+  "abaci": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered"
+  },
+  "aurel": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered"
+  },
+  "hallo": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered"
+  },
+  "tinkr": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered"
+  },
+  "ponder": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered"
+  },
+  "pondr": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered"
+  },
+  "mulling": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "not registered"
+  },
+  "fathom": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered"
+  },
+  "fathomly": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "not registered",
+   "io": "registered"
+  },
+  "noodle": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered"
+  },
+  "wonderlane": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "not registered",
+   "io": "not registered"
+  },
+  "tellwell": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered"
+  },
+  "clearcut": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered"
+  },
+  "unravel": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered"
+  },
+  "untangle": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered"
+  }
+ }
+}

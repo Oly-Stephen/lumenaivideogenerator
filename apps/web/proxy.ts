@@ -19,6 +19,8 @@ export async function proxy(request: NextRequest) {
   if (isApp && !data.user) {
     const url = request.nextUrl.clone();
     url.pathname = "/login";
+    // remember where the user was going (e.g. /new?topic=… from the landing prompt box)
+    url.search = `?next=${encodeURIComponent(request.nextUrl.pathname + request.nextUrl.search)}`;
     return NextResponse.redirect(url);
   }
   return response;

@@ -7,8 +7,8 @@ import { browserClient } from "@/lib/supabase";
 
 const LOW = 100;
 
-/** Header balance; updates live from the private `user:<id>` broadcast emitted on every ledger insert. */
-export function CreditBalance() {
+/** Live credit balance; updates from the private `user:<id>` broadcast emitted on every ledger insert. */
+export function useBalance(): number | null {
   const supabase = useMemo(() => browserClient(), []);
   const [balance, setBalance] = useState<number | null>(null);
 
@@ -34,7 +34,13 @@ export function CreditBalance() {
     };
   }, [supabase]);
 
-  if (balance === null) return <span aria-hidden className="skeleton h-8 w-24 rounded-full" />;
+  return balance;
+}
+
+/** Compact pill (mobile top bar). */
+export function CreditBalance() {
+  const balance = useBalance();
+  if (balance === null) return <span aria-hidden className="skeleton h-8 w-20 rounded-full" />;
   const low = balance < LOW;
   return (
     <Link href="/credits" title="1 credit = $0.01 of generation cost"
@@ -43,5 +49,26 @@ export function CreditBalance() {
       {balance.toLocaleString()}
       <span className="sr-only"> credits{low ? ", running low" : ""}</span>
     </Link>
+  );
+}
+
+/** Sidebar card: balance, roughly what it buys, and a link to the usage history. */
+export function CreditCard() {
+  const balance = useBalance();
+  const low = balance !== null && balance < LOW;
+  return (
+    <div className="rounded-[16px] border border-line bg-surface p-3.5">
+      <div className="flex items-center justify-between">
+        <span className="text-[12px] font-medium text-muted">Credits</span>
+        <Coins size={15} className={low ? "text-warning" : "text-muted"} aria-hidden />
+      </div>
+      {balance === null
+        ? <span aria-hidden className="skeleton mt-1.5 block h-7 w-20" />
+        : <p className={`fade mt-1 text-[24px] leading-none font-semibold tracking-[-0.02em] tabular-nums ${low ? "text-warning" : ""}`}>{balance.toLocaleString()}</p>}
+      <p className="mt-1 text-[12px] text-muted">{balance === null ? " " : `About ${Math.max(0, Math.floor(balance / 100))} Shorts at Budget`}</p>
+      <Link href="/credits" className="press mt-3 flex h-8 items-center justify-center gap-1 rounded-full bg-surface-2 text-[13px] font-medium hover:bg-line">
+        View usage
+      </Link>
+    </div>
   );
 }

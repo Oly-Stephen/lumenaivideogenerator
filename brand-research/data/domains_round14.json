@@ -1,0 +1,334 @@
+{
+ "checked_at": "2026-10-13T12:09:36+00:00",
+ "results": {
+  "anansi": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "ananse": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "anansio": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "co": "not registered"
+  },
+  "iris": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "irisfold": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "co": "not registered"
+  },
+  "clio": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "cliofold": {
+   "com": "not registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "co": "not registered"
+  },
+  "mimir": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "hermio": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "not registered"
+  },
+  "tadaa": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "tadalight": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "co": "not registered"
+  },
+  "eurekly": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "co": "not registered"
+  },
+  "voilo": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "not registered"
+  },
+  "ahaflip": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "co": "not registered"
+  },
+  "prismly": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "not registered"
+  },
+  "lanternly": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "not registered",
+   "co": "registered"
+  },
+  "beaconly": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "emberfold": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "registered",
+   "io": "not registered",
+   "co": "not registered"
+  },
+  "emberwhy": {
+   "com": "not registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "co": "not registered"
+  },
+  "whyember": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "co": "not registered"
+  },
+  "whyprism": {
+   "com": "not registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "co": "not registered"
+  },
+  "prismfold": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "co": "registered"
+  },
+  "lumenfold": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "co": "not registered"
+  },
+  "crayonly": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "registered",
+   "io": "not registered",
+   "co": "not registered"
+  },
+  "quillfold": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "co": "not registered"
+  },
+  "pinwheel": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "pinwheely": {
+   "com": "not registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "co": "not registered"
+  },
+  "whyquill": {
+   "com": "not registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "co": "not registered"
+  },
+  "inkquill": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "co": "not registered"
+  },
+  "crayonwhy": {
+   "com": "not registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "co": "not registered"
+  },
+  "acornly": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "not registered"
+  },
+  "whyacorn": {
+   "com": "not registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "co": "not registered"
+  },
+  "acornfold": {
+   "com": "not registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "co": "not registered"
+  },
+  "pebblefold": {
+   "com": "not registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "co": "not registered"
+  },
+  "mossfold": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "not registered",
+   "io": "not registered",
+   "co": "not registered"
+  },
+  "fernlit": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "co": "not registered"
+  },
+  "seedfold": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "not registered",
+   "io": "registered",
+   "co": "not registered"
+  },
+  "whypop": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "co": "not registered"
+  },
+  "whybloom": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "co": "not registered"
+  },
+  "whyspark": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "co": "not registered"
+  },
+  "whywonder": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "co": "not registered"
+  },
+  "wonderwhy": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "nodfold": {
+   "com": "not registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "co": "not registered"
+  },
+  "foldnod": {
+   "com": "not registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "co": "not registered"
+  },
+  "gleamfold": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "co": "not registered"
+  },
+  "glimmerly": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "not registered",
+   "io": "not registered",
+   "co": "not registered"
+  },
+  "sparkfold": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "not registered",
+   "co": "not registered"
+  }
+ }
+}

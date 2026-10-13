@@ -4,7 +4,9 @@ import { Coins, FilmStrip, Plus, SignOut, UserCircle } from "@phosphor-icons/rea
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import { BrandLockup } from "@/components/BrandMark";
 import { btn } from "@/components/ui";
+import { BRAND } from "@/lib/brand";
 import { browserClient } from "@/lib/supabase";
 import { CreditBalance } from "./CreditBalance";
 
@@ -43,9 +45,8 @@ export function AppBar({ signedIn, email }: { signedIn: boolean; email: string |
   return (
     <header className="material-bar sticky top-0 z-30 border-b border-line">
       <div className="mx-auto flex h-14 max-w-6xl items-center gap-2 px-4 sm:px-6">
-        <Link href="/" className="mr-3 flex items-center gap-2 font-semibold tracking-[-0.01em]">
-          <span aria-hidden className="h-5 w-5 rounded-[6px] bg-[conic-gradient(from_200deg,var(--accent),color-mix(in_oklab,var(--accent),white_45%),var(--accent))]" />
-          Lumen
+        <Link href="/" aria-label={`${BRAND} home`} className="press mr-3 rounded-md text-fg">
+          <BrandLockup />
         </Link>
         {signedIn && (
           <nav className="hidden items-center gap-1 sm:flex" aria-label="Main">

@@ -1,0 +1,461 @@
+{
+ "checked_at": "2026-10-13T11:03:42+00:00",
+ "results": {
+  "tiza": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "video": "not registered",
+   "co": "registered"
+  },
+  "pizarra": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "video": "not registered",
+   "co": "not registered"
+  },
+  "vineta": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "video": "not registered",
+   "co": "not registered"
+  },
+  "retablo": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "video": "not registered",
+   "co": "registered"
+  },
+  "cuentito": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "registered",
+   "io": "not registered",
+   "video": "not registered",
+   "co": "not registered"
+  },
+  "chispa": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "video": "not registered",
+   "co": "registered"
+  },
+  "candil": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "video": "not registered",
+   "co": "registered"
+  },
+  "lamina": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "video": "not registered",
+   "co": "registered"
+  },
+  "cuentame": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "video": "not registered",
+   "co": "registered"
+  },
+  "cuentalo": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "not registered",
+   "io": "registered",
+   "video": "not registered",
+   "co": "not registered"
+  },
+  "dimelo": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "video": "not registered",
+   "co": "not registered"
+  },
+  "fabulita": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "video": "not registered",
+   "co": "not registered"
+  },
+  "papelito": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "registered",
+   "io": "not registered",
+   "video": "not registered",
+   "co": "not registered"
+  },
+  "teatrino": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "video": "not registered",
+   "co": "not registered"
+  },
+  "lavagna": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "registered",
+   "io": "registered",
+   "video": "not registered",
+   "co": "not registered"
+  },
+  "favola": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "video": "not registered",
+   "co": "registered"
+  },
+  "fiaba": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "not registered",
+   "io": "registered",
+   "video": "not registered",
+   "co": "registered"
+  },
+  "gesso": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "video": "not registered",
+   "co": "registered"
+  },
+  "spiega": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "video": "not registered",
+   "co": "not registered"
+  },
+  "vignetta": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "video": "not registered",
+   "co": "not registered"
+  },
+  "lanterna": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "video": "registered",
+   "co": "registered"
+  },
+  "burattino": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "video": "not registered",
+   "co": "not registered"
+  },
+  "favolo": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "registered",
+   "video": "not registered",
+   "co": "not registered"
+  },
+  "cordel": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "video": "not registered",
+   "co": "registered"
+  },
+  "lousa": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "not registered",
+   "video": "not registered",
+   "co": "registered"
+  },
+  "conto": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "video": "not registered",
+   "co": "registered"
+  },
+  "continho": {
+   "com": "not registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "video": "not registered",
+   "co": "not registered"
+  },
+  "imagier": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "video": "not registered",
+   "co": "not registered"
+  },
+  "ardoise": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "video": "not registered",
+   "co": "registered"
+  },
+  "craie": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "not registered",
+   "video": "not registered",
+   "co": "registered"
+  },
+  "lanterne": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "video": "not registered",
+   "co": "not registered"
+  },
+  "conteur": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "not registered",
+   "video": "not registered",
+   "co": "registered"
+  },
+  "fabula": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "video": "registered",
+   "co": "registered"
+  },
+  "tabula": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "video": "registered",
+   "co": "registered"
+  },
+  "eikon": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "video": "not registered",
+   "co": "registered"
+  },
+  "phaino": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "video": "not registered",
+   "co": "registered"
+  },
+  "mimesis": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "video": "not registered",
+   "co": "registered"
+  },
+  "itan": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "video": "not registered",
+   "co": "registered"
+  },
+  "alaye": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "registered",
+   "io": "not registered",
+   "video": "not registered",
+   "co": "not registered"
+  },
+  "oye": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "video": "not registered",
+   "co": "registered"
+  },
+  "alo": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "video": "not registered",
+   "co": "registered"
+  },
+  "akuko": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "registered",
+   "io": "registered",
+   "video": "not registered",
+   "co": "registered"
+  },
+  "hadithi": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "registered",
+   "io": "not registered",
+   "video": "not registered",
+   "co": "registered"
+  },
+  "kisa": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "video": "not registered",
+   "co": "registered"
+  },
+  "fahamu": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "not registered",
+   "io": "registered",
+   "video": "not registered",
+   "co": "not registered"
+  },
+  "picha": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "registered",
+   "io": "registered",
+   "video": "not registered",
+   "co": "registered"
+  },
+  "kahani": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "video": "not registered",
+   "co": "registered"
+  },
+  "katha": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "video": "not registered",
+   "co": "registered"
+  },
+  "iyagi": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "video": "not registered",
+   "co": "registered"
+  },
+  "tizaly": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "video": "not registered",
+   "co": "not registered"
+  },
+  "vinetta": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "registered",
+   "io": "not registered",
+   "video": "not registered",
+   "co": "not registered"
+  },
+  "cuentu": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "video": "not registered",
+   "co": "registered"
+  },
+  "favolio": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "registered",
+   "io": "not registered",
+   "video": "not registered",
+   "co": "not registered"
+  },
+  "cordeli": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "video": "not registered",
+   "co": "not registered"
+  },
+  "teatrio": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "video": "not registered",
+   "co": "not registered"
+  },
+  "itanly": {
+   "com": "not registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "video": "not registered",
+   "co": "not registered"
+  },
+  "kathio": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "video": "not registered",
+   "co": "not registered"
+  }
+ }
+}

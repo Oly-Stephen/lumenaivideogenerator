@@ -1,11 +1,15 @@
 "use client";
 
-import { ArrowCounterClockwise, ArrowLeft, CaretDown, DownloadSimple, FilmSlate, Play, Prohibit } from "@phosphor-icons/react";
+import { STYLE_PRESETS } from "@lumen/core";
+import {
+  ArrowCounterClockwise, ArrowLeft, CaretDown, Coins, DownloadSimple, FilmSlate, Info, Lightning, Prohibit, Sparkle, WarningCircle,
+} from "@phosphor-icons/react";
 import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { btn, Button, Notice, Sheet, Skeleton, useToast } from "@/components/ui";
+import { Button, Sheet, Skeleton, useToast } from "@/components/ui";
+import { BRAND_SLUG } from "@/lib/brand";
 import { useSignedUrls } from "@/lib/media";
-import { formatLabel, TERMINAL, WAITING } from "@/lib/stages";
+import { STAGES, stageIndex, statusLabel, TERMINAL, WAITING } from "@/lib/stages";
 import { browserClient } from "@/lib/supabase";
 import { PlanReview } from "./PlanReview";
 import { RedoSheet } from "./RedoScene";
@@ -15,6 +19,10 @@ import { PROJECT_COLUMNS, SCENE_COLUMNS, type Project, type Scene } from "./type
 
 interface Ledger { reason: string; delta: number }
 
+const STYLE_NAMES: Record<string, string> = Object.fromEntries(STYLE_PRESETS.map((p) => [p.key, p.name]));
+const secs = (ms: number) => `${(ms / 1000).toFixed(1)}s`;
+const clock = (ms: number) => `${Math.floor(ms / 60000)}:${String(Math.floor((ms % 60000) / 1000)).padStart(2, "0")}`;
+
 /** Turns raw pipeline errors into a sentence a person can act on; the raw text stays under "Details". */
 function explainFailure(detail: string | null, paused: boolean): string {
   const d = (detail ?? "").toLowerCase();
@@ -22,6 +30,10 @@ function explainFailure(detail: string | null, paused: boolean): string {
   if (d.includes("fetch failed") || d.includes("enotfound") || d.includes("econnreset") || d.includes("timeout")) return "A service didn't respond in time. Finished steps are kept, so Retry picks up where it stopped.";
   if (d.includes("refus")) return "The writing model declined this topic. Try rephrasing it.";
   return "Something went wrong in one step. Finished steps are kept, so Retry picks up where it stopped.";
+}
+
+function Row({ k, v }: { k: string; v: React.ReactNode }) {
+  return <div className="flex justify-between gap-4 py-1.5 text-[13px]"><dt className="text-muted">{k}</dt><dd className="text-right font-medium tabular-nums">{v}</dd></div>;
 }
 
 export function ProjectLive({ initial }: { initial: Project }) {
@@ -37,6 +49,7 @@ export function ProjectLive({ initial }: { initial: Project }) {
   const [busy, setBusy] = useState<string | null>(null);
   const [confirmCancel, setConfirmCancel] = useState(false);
   const [redo, setRedo] = useState<Scene | null>(null);
+  const [selected, setSelected] = useState<string | null>(null);
   const [showDetails, setShowDetails] = useState(false);
   const player = useRef<HTMLVideoElement>(null);
 
@@ -103,151 +116,240 @@ export function ProjectLive({ initial }: { initial: Project }) {
   const done = status === "completed";
   const failed = status === "failed";
   const paused = status === "paused_insufficient_credits";
+  const canceled = status === "canceled";
   const working = !TERMINAL.has(status) && !WAITING.has(status);
+  const reviewing = WAITING.has(status);
   const canCancel = !TERMINAL.has(status) || paused;
   const held = -ledger.filter((r) => r.reason === "reservation").reduce((a, r) => a + r.delta, 0);
   const charged = -ledger.filter((r) => r.reason === "charge").reduce((a, r) => a + r.delta, 0);
+  const list = scenes ?? [];
+  const lengthMs = list.reduce((m, s) => Math.max(m, s.end_ms ?? 0), 0);
+  const scene = list.find((s) => s.id === selected) ?? null;
+  // While generating, show the newest finished keyframe on the stage.
+  const latest = [...list].reverse().find((s) => s.keyframe_asset_id && urls[s.keyframe_asset_id]);
+  const stageImg = scene?.keyframe_asset_id ? urls[scene.keyframe_asset_id] : latest?.keyframe_asset_id ? urls[latest.keyframe_asset_id] : undefined;
+  const fileName = `${(project.title ?? `${BRAND_SLUG}-video`).replace(/[^\w\- ]+/g, "").trim() || `${BRAND_SLUG}-video`}.mp4`;
 
-  function seek(s: Scene) {
-    if (!player.current || s.start_ms === null) return;
-    player.current.currentTime = s.start_ms / 1000;
-    void player.current.play();
+  function pick(s: Scene) {
+    setSelected((cur) => (cur === s.id ? null : s.id));
+    if (done && player.current && s.start_ms !== null) {
+      player.current.currentTime = s.start_ms / 1000;
+      void player.current.play();
+    }
   }
 
-  return (
-    <main className="mx-auto max-w-6xl px-4 pt-6 pb-24 sm:px-6">
-      <Link href="/" className="press inline-flex items-center gap-1 rounded-full py-1 pr-2 text-[13px] text-muted hover:text-fg">
-        <ArrowLeft size={14} aria-hidden /> Library
-      </Link>
+  const statusPill = (
+    <span className={`inline-flex shrink-0 items-center gap-1.5 rounded-full px-2.5 py-1 text-[12px] font-semibold ${done ? "bg-[rgb(22_163_74/0.1)] text-[#15803d]" : failed ? "bg-danger-soft text-danger" : paused ? "bg-warning-soft text-warning" : canceled ? "bg-surface-2 text-muted" : reviewing ? "bg-accent-soft text-accent" : "bg-surface-2 text-fg"}`}>
+      {working && <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-accent motion-safe:animate-pulse" />}
+      {done ? "Ready" : statusLabel(status)}
+    </span>
+  );
 
-      <header className="mt-3 flex flex-wrap items-start justify-between gap-4">
-        <div className="min-w-0 max-w-3xl">
-          <h1 className="display">{project.title ?? project.input_text}</h1>
-          <p className="mt-1.5 text-sm text-muted">
-            {formatLabel(project.format)} {vertical ? "9:16" : "16:9"}, {project.quality === "budget" ? "Budget" : project.quality === "standard" ? "Standard" : "Premium"}
-            {project.target_duration_s ? `, ${project.target_duration_s} sec` : ""}
-          </p>
+  return (
+    <main className="min-h-dvh bg-canvas">
+      {/* ---------- header ---------- */}
+      <header className="material-bar sticky top-0 z-20 border-b border-line max-lg:top-14">
+        <div className="flex h-16 items-center gap-3 px-4 sm:px-6">
+          <Link href="/" aria-label="Back to Library" className="press flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-muted hover:bg-surface-2 hover:text-fg">
+            <ArrowLeft size={18} />
+          </Link>
+          <div className="min-w-0 flex-1">
+            <h1 className="truncate text-[16px] font-semibold tracking-[-0.01em]">{project.title ?? project.input_text}</h1>
+            <p className="truncate text-[12px] text-muted">
+              {vertical ? "Short 9:16" : "Full 16:9"}, {STYLE_NAMES[project.style_preset ?? ""] ?? "Custom style"}, {project.quality === "standard" ? "Standard" : project.quality === "budget" ? "Budget" : "Premium"}
+            </p>
+          </div>
+          {statusPill}
+          {canCancel && (
+            <Button variant="secondary" size="sm" onClick={() => setConfirmCancel(true)} disabled={busy !== null} className="max-sm:hidden">
+              <Prohibit size={15} aria-hidden /> Cancel
+            </Button>
+          )}
+          {done && videoUrl && (
+            <a href={videoUrl} download={fileName} className="press inline-flex h-9 shrink-0 items-center gap-1.5 rounded-full bg-accent px-4 text-[13px] font-semibold text-on-accent hover:bg-accent-hover">
+              <DownloadSimple size={16} weight="bold" aria-hidden /> <span className="max-sm:hidden">Download</span>
+            </a>
+          )}
         </div>
-        {canCancel && (
-          <Button variant="secondary" size="sm" onClick={() => setConfirmCancel(true)} disabled={busy !== null}>
-            <Prohibit size={15} aria-hidden /> Cancel
-          </Button>
-        )}
       </header>
 
-      {!done && status !== "canceled" && (
-        <div className="mt-8">
-          <StageTracker status={failed || paused ? stageFromDetail(project) : status} detail={working ? project.status_detail : null}
-            progress={Number(project.progress)} paused={failed || paused} />
+      {/* ---------- review steps: full width ---------- */}
+      {reviewing && (
+        <div className="mx-auto max-w-[1240px] px-4 pb-24 sm:px-6">
+          <div className="pt-6"><StageTracker status={status} detail={null} progress={Number(project.progress)} /></div>
+          {status === "awaiting_script_approval" && script && (
+            <ScriptReview key={script.id} supabase={supabase} projectId={project.id} script={script} targetS={project.target_duration_s} onChanged={refresh} />
+          )}
+          {status === "awaiting_plan_approval" && scenes && (
+            <PlanReview supabase={supabase} projectId={project.id} quality={project.quality} estimate={project.estimate}
+              estimateCredits={project.estimate_credits} balance={balance} scenes={scenes} characters={characters} onChanged={refresh} />
+          )}
         </div>
       )}
 
-      {(failed || paused) && (
-        <div className="mt-6">
-          <Notice tone={failed ? "danger" : "warning"} title={failed ? "This video stopped" : "Paused"}
-            action={
-              <Button onClick={() => rpc("retry", "rpc_retry_project", { p_project_id: project.id }, "Picking up where it stopped.")} busy={busy === "retry"}>
-                <ArrowCounterClockwise size={16} aria-hidden /> {paused ? "Continue" : "Retry"}
-              </Button>
-            }>
-            <p>{explainFailure(project.status_detail, paused)}</p>
-            {project.status_detail && (
-              <div className="mt-2">
-                <button onClick={() => setShowDetails((d) => !d)} aria-expanded={showDetails} className="inline-flex items-center gap-1 text-[12px] underline-offset-2 hover:underline">
-                  Details <CaretDown size={11} className={showDetails ? "rotate-180" : ""} aria-hidden />
-                </button>
-                {showDetails && <p className="mt-1 font-mono text-[12px] break-words">{project.status_detail}</p>}
+      {/* ---------- editor: stage + storyboard + inspector ---------- */}
+      {!reviewing && (
+        <div className="lg:grid lg:grid-cols-[minmax(0,1fr)_340px]">
+          <div className="min-w-0">
+            {/* stage */}
+            <div className="dots relative flex min-h-[52dvh] items-center justify-center px-4 py-8 sm:px-8 lg:min-h-[calc(100dvh-4rem-188px)]">
+              <div className={`relative overflow-hidden rounded-[20px] bg-black shadow-[0_30px_80px_-30px_rgb(24_24_27/0.45)] ${vertical ? "aspect-[9/16] h-[min(62dvh,620px)]" : "aspect-video w-full max-w-[900px]"}`}>
+                {done && videoUrl ? (
+                  <video ref={player} key={videoUrl} src={videoUrl} controls playsInline preload="metadata"
+                    poster={list[0]?.keyframe_asset_id ? urls[list[0].keyframe_asset_id] : undefined} className="fade h-full w-full object-contain" />
+                ) : stageImg ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img key={stageImg} src={stageImg} alt="" className={`fade h-full w-full object-cover ${working ? "opacity-90" : ""}`} />
+                ) : done ? (
+                  <Skeleton className="h-full w-full rounded-none" />
+                ) : (
+                  <div className="flex h-full w-full flex-col items-center justify-center gap-3 bg-surface text-muted">
+                    {working ? <Sparkle size={28} weight="fill" className="text-accent motion-safe:animate-pulse" /> : <FilmSlate size={28} />}
+                    <p className="max-w-[24ch] text-center text-[13px]">{working ? (project.status_detail ?? "Getting started") : canceled ? "Canceled" : "Nothing to show yet"}</p>
+                  </div>
+                )}
+                {working && stageImg && (
+                  <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/75 to-transparent p-4 pt-12 text-white">
+                    <p className="flex items-center gap-2 text-[13px] font-medium"><Sparkle size={14} weight="fill" className="motion-safe:animate-pulse" /> {project.status_detail ?? "Working"}</p>
+                    <div className="mt-2 h-1 overflow-hidden rounded-full bg-white/25"><div className="h-full rounded-full bg-white transition-[width] duration-700" style={{ width: `${Math.max(4, Number(project.progress))}%` }} /></div>
+                  </div>
+                )}
+                {scene && !done && (
+                  <span className="absolute top-3 left-3 rounded-full bg-black/55 px-2.5 py-1 text-[12px] font-medium text-white backdrop-blur">Scene {scene.idx + 1}</span>
+                )}
+              </div>
+            </div>
+
+            {/* storyboard strip */}
+            <section className="border-t border-line bg-surface px-4 py-4 sm:px-6" aria-label="Storyboard">
+              <div className="mb-3 flex items-center justify-between gap-3">
+                <h2 className="text-[13px] font-semibold">Storyboard <span className="font-normal text-muted">{list.length ? `${list.length} scenes${lengthMs ? `, ${clock(lengthMs)}` : ""}` : ""}</span></h2>
+                {done && <p className="text-[12px] text-muted max-sm:hidden">Select a scene to jump to it or redo it.</p>}
+              </div>
+              {list.length === 0 ? (
+                <div className="flex gap-2.5 overflow-hidden">
+                  {Array.from({ length: 8 }, (_, i) => <Skeleton key={i} className={`shrink-0 ${vertical ? "h-[112px] w-[63px]" : "h-[63px] w-[112px]"}`} />)}
+                </div>
+              ) : (
+                <ol className="flex gap-2.5 overflow-x-auto pb-1">
+                  {list.map((s) => {
+                    const url = s.keyframe_asset_id ? urls[s.keyframe_asset_id] : undefined;
+                    const on = s.id === selected;
+                    const pending = !s.keyframe_asset_id;
+                    return (
+                      <li key={s.id} className="shrink-0">
+                        <button onClick={() => pick(s)} aria-pressed={on} aria-label={`Scene ${s.idx + 1}`}
+                          className={`press relative block overflow-hidden rounded-[10px] bg-surface-2 ring-offset-2 ring-offset-surface ${vertical ? "h-[112px] w-[63px]" : "h-[63px] w-[112px]"} ${on ? "ring-2 ring-accent" : "ring-1 ring-line hover:ring-line-strong"}`}>
+                          {url
+                            // eslint-disable-next-line @next/next/no-img-element
+                            ? <img src={url} alt="" className="fade h-full w-full object-cover" />
+                            : pending && working ? <Skeleton className="h-full w-full rounded-none" /> : <span className="flex h-full items-center justify-center text-muted"><FilmSlate size={16} /></span>}
+                          <span className="absolute bottom-1 left-1 rounded bg-black/55 px-1 text-[10px] font-semibold text-white tabular-nums">{s.idx + 1}</span>
+                          {s.animate && s.clip_asset_id && <Lightning size={11} weight="fill" className="absolute top-1 right-1 text-white drop-shadow" aria-label="Animated" />}
+                        </button>
+                        {s.start_ms !== null && s.end_ms !== null && <p className="mt-1 text-center text-[10px] text-muted tabular-nums">{secs(s.end_ms - s.start_ms)}</p>}
+                      </li>
+                    );
+                  })}
+                </ol>
+              )}
+            </section>
+          </div>
+
+          {/* inspector */}
+          <aside className="border-line bg-surface lg:sticky lg:top-16 lg:h-[calc(100dvh-4rem)] lg:overflow-y-auto lg:border-l" aria-label="Inspector">
+            {(failed || paused) && (
+              <div className={`m-4 rounded-[14px] p-4 ${failed ? "bg-danger-soft" : "bg-warning-soft"}`} role={failed ? "alert" : "status"}>
+                <p className={`flex items-center gap-1.5 text-[14px] font-semibold ${failed ? "text-danger" : "text-warning"}`}>
+                  <WarningCircle size={17} weight="fill" aria-hidden /> {failed ? "This video stopped" : "Paused"}
+                </p>
+                <p className="mt-1 text-[13px] text-fg/80">{explainFailure(project.status_detail, paused)}</p>
+                <Button className="mt-3 w-full" onClick={() => rpc("retry", "rpc_retry_project", { p_project_id: project.id }, "Picking up where it stopped.")} busy={busy === "retry"}>
+                  <ArrowCounterClockwise size={16} aria-hidden /> {paused ? "Continue" : "Retry"}
+                </Button>
+                {project.status_detail && (
+                  <div className="mt-2">
+                    <button onClick={() => setShowDetails((d) => !d)} aria-expanded={showDetails} className="inline-flex items-center gap-1 text-[12px] text-muted hover:text-fg">
+                      Details <CaretDown size={11} className={showDetails ? "rotate-180" : ""} aria-hidden />
+                    </button>
+                    {showDetails && <p className="mt-1 font-mono text-[11px] break-words text-muted">{project.status_detail}</p>}
+                  </div>
+                )}
               </div>
             )}
-          </Notice>
-        </div>
-      )}
 
-      {status === "canceled" && (
-        <div className="mt-6"><Notice tone="neutral" title="Canceled">Unused held credits were returned to your balance.</Notice></div>
-      )}
-
-      {status === "awaiting_script_approval" && script && (
-        <ScriptReview key={script.id} supabase={supabase} projectId={project.id} script={script} targetS={project.target_duration_s} onChanged={refresh} />
-      )}
-      {status === "awaiting_plan_approval" && scenes && (
-        <PlanReview supabase={supabase} projectId={project.id} quality={project.quality} estimate={project.estimate}
-          estimateCredits={project.estimate_credits} balance={balance} scenes={scenes} characters={characters} onChanged={refresh} />
-      )}
-
-      {done && (
-        <section className={`enter mt-8 grid gap-8 ${vertical ? "md:grid-cols-[minmax(0,380px)_1fr]" : ""}`}>
-          <div className={vertical ? "mx-auto w-full max-w-[380px]" : ""}>
-            <div className={`mx-auto overflow-hidden rounded-[var(--radius-card)] bg-black shadow-float ${vertical ? "aspect-[9/16] max-h-[72dvh] w-full max-w-[calc(72dvh*9/16)]" : "aspect-video"}`}>
-              {videoUrl
-                ? <video ref={player} key={videoUrl} src={videoUrl} controls playsInline preload="metadata"
-                    poster={scenes?.[0]?.keyframe_asset_id ? urls[scenes[0].keyframe_asset_id] : undefined} className="fade h-full w-full" />
-                : <Skeleton className="h-full w-full rounded-none" />}
-            </div>
-          </div>
-          <div className="flex flex-col gap-5">
-            <div className="flex flex-wrap gap-2">
-              {videoUrl
-                ? <a href={videoUrl} download={`${(project.title ?? "lumen-video").replace(/[^\w\- ]+/g, "").trim() || "lumen-video"}.mp4`} className={btn("primary", "lg")}>
-                    <DownloadSimple size={18} weight="bold" aria-hidden /> Download MP4
-                  </a>
-                : <Button size="lg" disabled>Preparing download</Button>}
-            </div>
-            {held > 0 && (
-              <p className="text-sm text-muted">
-                Used <span className="font-medium text-fg tabular-nums">{charged}</span> credits.
-                {held - charged > 0 && <> <span className="tabular-nums">{held - charged}</span> held credits were returned.</>}
-              </p>
-            )}
-            <p className="text-sm text-muted">Something off in one scene? Choose Redo on it below. Only that scene is regenerated.</p>
-          </div>
-        </section>
-      )}
-
-      {scenes && scenes.length > 0 && status !== "awaiting_plan_approval" && (
-        <section className="mt-12">
-          <h2 className="title">Scenes</h2>
-          <ol className={`mt-4 grid gap-x-3 gap-y-5 ${vertical ? "grid-cols-2 sm:grid-cols-4 lg:grid-cols-6" : "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"}`}>
-            {scenes.map((s) => {
-              const url = s.keyframe_asset_id ? urls[s.keyframe_asset_id] : undefined;
-              const redoing = !done && s.status !== "ready" && s.revision > 1;
-              return (
-                <li key={s.id} className="group min-w-0">
-                  <button onClick={() => seek(s)} disabled={!done || !videoUrl} aria-label={`Play from scene ${s.idx + 1}`}
-                    className={`relative block w-full overflow-hidden rounded-[var(--radius-control)] bg-surface-2 ring-1 ring-line disabled:cursor-default ${vertical ? "aspect-[9/16]" : "aspect-video"}`}>
-                    {url
-                      // eslint-disable-next-line @next/next/no-img-element
-                      ? <img src={url} alt="" className="fade h-full w-full object-cover" />
-                      : s.keyframe_asset_id || working
-                        ? <Skeleton className="h-full w-full rounded-none" />
-                        : <span className="flex h-full items-center justify-center text-muted"><FilmSlate size={22} aria-hidden /></span>}
-                    {s.clip_asset_id && s.animate && (
-                      <span className="absolute top-1.5 left-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-black/55 text-white backdrop-blur-sm" title="Animated">
-                        <Play size={10} weight="fill" aria-hidden />
-                      </span>
-                    )}
-                    {redoing && <span className="absolute inset-x-0 bottom-0 bg-black/55 py-1 text-center text-[11px] text-white backdrop-blur-sm">Redoing</span>}
-                  </button>
-                  <div className="mt-2 flex items-center justify-between gap-2">
-                    <span className="text-[12px] text-muted tabular-nums">
-                      {s.idx + 1}{s.start_ms !== null && s.end_ms !== null ? `, ${((s.end_ms - s.start_ms) / 1000).toFixed(1)}s` : ""}
-                      {s.revision > 1 ? `, v${s.revision}` : ""}
-                      {s.error?.degraded ? ", still" : ""}
-                    </span>
-                    {done && (
-                      <button onClick={() => setRedo(s)} className="press rounded-full px-2 py-0.5 text-[12px] font-medium text-accent hover:bg-accent-soft">Redo</button>
-                    )}
+            {scene ? (
+              <div className="enter p-5">
+                <div className="flex items-center justify-between">
+                  <p className="text-[12px] font-semibold text-accent">Scene {scene.idx + 1} of {list.length}</p>
+                  <button onClick={() => setSelected(null)} className="text-[12px] text-muted hover:text-fg">Video details</button>
+                </div>
+                <p className="mt-2 text-[17px] leading-snug font-semibold tracking-[-0.01em]">&ldquo;{scene.narration}&rdquo;</p>
+                <dl className="mt-4 divide-y divide-line border-y border-line">
+                  {scene.start_ms !== null && scene.end_ms !== null && <Row k="Time" v={`${clock(scene.start_ms)} to ${clock(scene.end_ms)}`} />}
+                  <Row k="Shot" v={scene.shot_type.replace("_", " ")} />
+                  <Row k="Motion" v={scene.animate ? (scene.error?.degraded ? "Still (motion failed)" : "Animated") : "Camera move"} />
+                  {scene.revision > 1 && <Row k="Version" v={`v${scene.revision}`} />}
+                </dl>
+                <p className="mt-4 text-[12px] font-semibold text-muted">Image</p>
+                <p className="mt-1 text-[13px] leading-relaxed">{scene.visual_prompt}</p>
+                {scene.motion_prompt && (<><p className="mt-3 text-[12px] font-semibold text-muted">Camera</p><p className="mt-1 text-[13px]">{scene.motion_prompt}</p></>)}
+                {done && (
+                  <Button className="mt-5 w-full" onClick={() => setRedo(scene)}>
+                    <ArrowCounterClockwise size={16} aria-hidden /> Redo this scene
+                  </Button>
+                )}
+              </div>
+            ) : (
+              <div className="p-5">
+                {working && (
+                  <div className="mb-5">
+                    <p className="text-[12px] font-semibold text-muted">Progress</p>
+                    <ol className="mt-2 space-y-1.5">
+                      {STAGES.map((st, i) => {
+                        const cur = stageIndex(status);
+                        const state = i < cur ? "done" : i === cur ? "now" : "todo";
+                        return (
+                          <li key={st.key} className={`flex items-center gap-2.5 text-[13px] ${state === "todo" ? "text-muted/70" : ""}`}>
+                            <span aria-hidden className={`h-2 w-2 shrink-0 rounded-full ${state === "done" ? "bg-[#16a34a]" : state === "now" ? "bg-accent motion-safe:animate-pulse" : "bg-line-strong"}`} />
+                            <span className={state === "now" ? "font-semibold" : ""}>{st.label}</span>
+                            {state === "now" && <span className="ml-auto truncate text-[12px] text-muted">{Math.round(Number(project.progress))}%</span>}
+                          </li>
+                        );
+                      })}
+                    </ol>
+                    <p className="mt-3 flex gap-1.5 text-[12px] text-muted"><Info size={14} className="mt-px shrink-0" aria-hidden /> You can leave this page; progress continues and shows in your Library.</p>
                   </div>
-                  <p className="mt-0.5 line-clamp-2 text-[13px] leading-snug">{s.narration}</p>
-                </li>
-              );
-            })}
-          </ol>
-        </section>
-      )}
+                )}
 
-      {working && (
-        <p className="mt-10 text-center text-[13px] text-muted">You can leave this page. Progress continues and shows in your Library.</p>
+                <p className="text-[12px] font-semibold text-muted">Video</p>
+                <dl className="mt-1 divide-y divide-line">
+                  <Row k="Format" v={vertical ? "Short 9:16" : "Full 16:9"} />
+                  <Row k="Length" v={lengthMs ? clock(lengthMs) : `${project.target_duration_s} sec target`} />
+                  <Row k="Scenes" v={list.length || "..."} />
+                  <Row k="Style" v={STYLE_NAMES[project.style_preset ?? ""] ?? "Custom"} />
+                  <Row k="Quality" v={project.quality === "standard" ? "Standard" : project.quality === "budget" ? "Budget" : "Premium"} />
+                  {characters.length > 0 && <Row k="Characters" v={characters.map((c) => c.name).join(", ")} />}
+                </dl>
+
+                <p className="mt-6 flex items-center gap-1.5 text-[12px] font-semibold text-muted"><Coins size={14} aria-hidden /> Credits</p>
+                <dl className="mt-1 divide-y divide-line">
+                  {project.estimate_credits !== null && <Row k="Estimate" v={project.estimate_credits} />}
+                  <Row k="Used" v={charged} />
+                  {held > charged && (done || canceled || failed) && <Row k="Returned" v={held - charged} />}
+                  {balance !== null && <Row k="Your balance" v={balance.toLocaleString()} />}
+                </dl>
+
+                {done && <p className="mt-6 rounded-[12px] bg-surface-2 p-3 text-[12px] text-muted">Something off in one scene? Select it in the storyboard and choose Redo. Only that scene is regenerated.</p>}
+                {canCancel && (
+                  <Button variant="danger" size="sm" className="mt-6 w-full sm:hidden" onClick={() => setConfirmCancel(true)}>
+                    <Prohibit size={15} aria-hidden /> Cancel video
+                  </Button>
+                )}
+              </div>
+            )}
+          </aside>
+        </div>
       )}
 
       {redo && (
@@ -266,20 +368,9 @@ export function ProjectLive({ initial }: { initial: Project }) {
           </div>
         }>
         <p className="text-sm text-muted">
-          Work in progress stops now. Credits already used for finished steps stay charged, and every unused held credit is returned. This can't be undone.
+          Work in progress stops now. Credits already used for finished steps stay charged, and every unused held credit is returned. This can&rsquo;t be undone.
         </p>
       </Sheet>
     </main>
   );
-}
-
-/** For failed/paused projects, show the tracker at the stage that stopped (from the last detail line). */
-function stageFromDetail(p: Project): string {
-  const d = (p.status_detail ?? "").toLowerCase();
-  if (d.includes("script") || d.includes("research")) return "scripting";
-  if (d.includes("plan")) return "planning";
-  if (d.includes("style")) return "locking_style";
-  if (d.includes("narrat") || d.includes("voice")) return "narrating";
-  if (d.includes("render") || d.includes("assembl") || d.includes("music")) return "rendering";
-  return "generating_scenes";
 }

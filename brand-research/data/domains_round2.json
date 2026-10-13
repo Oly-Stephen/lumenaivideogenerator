@@ -1,0 +1,493 @@
+{
+ "checked_at": "2026-10-13T10:13:06+00:00",
+ "results": {
+  "clarivo": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "video": "registered",
+   "studio": "registered"
+  },
+  "explivo": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "video": "not registered",
+   "studio": "not registered"
+  },
+  "lucidra": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "not registered",
+   "video": "not registered",
+   "studio": "not registered"
+  },
+  "zoetrix": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "video": "not registered",
+   "studio": "not registered"
+  },
+  "zoetica": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "not registered",
+   "video": "not registered",
+   "studio": "not registered"
+  },
+  "zoelia": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "registered",
+   "video": "not registered",
+   "studio": "not registered"
+  },
+  "kinorama": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "registered",
+   "io": "not registered",
+   "video": "not registered",
+   "studio": "not registered"
+  },
+  "plieto": {
+   "com": "not registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "video": "not registered",
+   "studio": "not registered"
+  },
+  "origamo": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "registered",
+   "video": "not registered",
+   "studio": "not registered"
+  },
+  "oriflick": {
+   "com": "not registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "video": "not registered",
+   "studio": "not registered"
+  },
+  "flickwise": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "video": "not registered",
+   "studio": "not registered"
+  },
+  "flipwise": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "video": "not registered",
+   "studio": "not registered"
+  },
+  "chalkwise": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "video": "not registered",
+   "studio": "not registered"
+  },
+  "chalktale": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "video": "not registered",
+   "studio": "not registered"
+  },
+  "curioso": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "video": "not registered",
+   "studio": "not registered"
+  },
+  "wonderkin": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "video": "not registered",
+   "studio": "registered"
+  },
+  "whylight": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "video": "not registered",
+   "studio": "not registered"
+  },
+  "tellcraft": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "video": "not registered",
+   "studio": "not registered"
+  },
+  "lanternly": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "not registered",
+   "video": "not registered",
+   "studio": "not registered"
+  },
+  "lamplit": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "video": "not registered",
+   "studio": "registered"
+  },
+  "lampwise": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "registered",
+   "io": "not registered",
+   "video": "not registered",
+   "studio": "not registered"
+  },
+  "lumifold": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "not registered",
+   "io": "not registered",
+   "video": "not registered",
+   "studio": "not registered"
+  },
+  "glowfold": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "video": "not registered",
+   "studio": "not registered"
+  },
+  "owlfold": {
+   "com": "not registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "video": "not registered",
+   "studio": "not registered"
+  },
+  "fablefold": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "video": "not registered",
+   "studio": "not registered"
+  },
+  "parablo": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "video": "not registered",
+   "studio": "not registered"
+  },
+  "vossa": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "not registered",
+   "video": "not registered",
+   "studio": "not registered"
+  },
+  "kelvo": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "video": "not registered",
+   "studio": "not registered"
+  },
+  "orra": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "video": "not registered",
+   "studio": "registered"
+  },
+  "mivo": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "video": "registered",
+   "studio": "registered"
+  },
+  "tavio": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "video": "not registered",
+   "studio": "registered"
+  },
+  "zuva": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "video": "not registered",
+   "studio": "not registered"
+  },
+  "docentia": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "not registered",
+   "video": "not registered",
+   "studio": "not registered"
+  },
+  "lucido": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "video": "not registered",
+   "studio": "registered"
+  },
+  "klaro": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "video": "not registered",
+   "studio": "registered"
+  },
+  "mnemora": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "video": "not registered",
+   "studio": "not registered"
+  },
+  "sapio": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "video": "not registered",
+   "studio": "registered"
+  },
+  "enargia": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "video": "not registered",
+   "studio": "not registered"
+  },
+  "enarge": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "video": "not registered",
+   "studio": "not registered"
+  },
+  "pictora": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "video": "not registered",
+   "studio": "registered"
+  },
+  "showlight": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "registered",
+   "io": "not registered",
+   "video": "not registered",
+   "studio": "registered"
+  },
+  "sparkwise": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "not registered",
+   "io": "registered",
+   "video": "not registered",
+   "studio": "not registered"
+  },
+  "explora": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "video": "not registered",
+   "studio": "registered"
+  },
+  "ideolume": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "video": "not registered",
+   "studio": "not registered"
+  },
+  "whyvid": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "video": "not registered",
+   "studio": "not registered"
+  },
+  "claritale": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "video": "not registered",
+   "studio": "not registered"
+  },
+  "foldlight": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "video": "not registered",
+   "studio": "not registered"
+  },
+  "inkfold": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "registered",
+   "io": "registered",
+   "video": "not registered",
+   "studio": "not registered"
+  },
+  "paperlit": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "video": "not registered",
+   "studio": "not registered"
+  },
+  "ahafold": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "video": "not registered",
+   "studio": "not registered"
+  },
+  "knowfold": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "video": "not registered",
+   "studio": "not registered"
+  },
+  "mullwise": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "video": "not registered",
+   "studio": "not registered"
+  },
+  "plinth": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "video": "not registered",
+   "studio": "registered"
+  },
+  "lumivo": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "video": "not registered",
+   "studio": "not registered"
+  },
+  "narrivo": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "video": "not registered",
+   "studio": "not registered"
+  },
+  "storiq": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "video": "not registered",
+   "studio": "not registered"
+  },
+  "tellvo": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "registered",
+   "io": "not registered",
+   "video": "not registered",
+   "studio": "not registered"
+  },
+  "illumo": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "not registered",
+   "video": "not registered",
+   "studio": "not registered"
+  },
+  "lumiq": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "video": "not registered",
+   "studio": "registered"
+  },
+  "cleo": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "video": "registered",
+   "studio": "registered"
+  },
+  "kumo": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "video": "registered",
+   "studio": "registered"
+  }
+ }
+}

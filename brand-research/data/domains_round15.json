@@ -1,0 +1,313 @@
+{
+ "checked_at": "2026-10-13T12:15:13+00:00",
+ "results": {
+  "kino": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "cine": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "eiga": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "not registered"
+  },
+  "sinema": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "filme": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "bideo": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "fidio": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "moto": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "motus": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "motio": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "ugoki": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "gati": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "kinesis": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "kineo": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "liike": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "ruch": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "not registered",
+   "io": "not registered",
+   "co": "registered"
+  },
+  "pohyb": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "co": "not registered"
+  },
+  "hareket": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "not registered",
+   "io": "not registered",
+   "co": "registered"
+  },
+  "harakati": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "co": "not registered"
+  },
+  "beweging": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "registered",
+   "io": "not registered",
+   "co": "not registered"
+  },
+  "rorelse": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "co": "not registered"
+  },
+  "dvizh": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "movimo": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "registered",
+   "io": "not registered",
+   "co": "not registered"
+  },
+  "chalchitra": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "not registered",
+   "io": "not registered",
+   "co": "not registered"
+  },
+  "chitra": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "donghua": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "katsudo": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "co": "not registered"
+  },
+  "kinema": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "vivant": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "bewegtbild": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "co": "not registered"
+  },
+  "ugokii": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "co": "not registered"
+  },
+  "ugokio": {
+   "com": "not registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "co": "not registered"
+  },
+  "kinemo": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "not registered",
+   "io": "registered",
+   "co": "not registered"
+  },
+  "motusa": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "co": "not registered"
+  },
+  "gatika": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "co": "not registered"
+  },
+  "chitrel": {
+   "com": "not registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "co": "not registered"
+  },
+  "chitrio": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "co": "not registered"
+  },
+  "liikeo": {
+   "com": "not registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "co": "not registered"
+  },
+  "harakato": {
+   "com": "not registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "co": "not registered"
+  },
+  "kinova": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "cinelo": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "registered",
+   "io": "registered",
+   "co": "registered"
+  },
+  "vivanto": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "registered",
+   "io": "not registered",
+   "co": "registered"
+  },
+  "dongu": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "co": "not registered"
+  },
+  "katsuo": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "not registered",
+   "io": "not registered",
+   "co": "registered"
+  }
+ }
+}

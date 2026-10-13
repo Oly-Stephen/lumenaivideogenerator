@@ -13,6 +13,7 @@ export interface Project {
   estimate_credits: number | null;
   spent_credits: number;
   target_duration_s: number;
+  style_preset: string | null;
   created_at: string;
   error: unknown;
 }
@@ -37,6 +38,6 @@ export interface Scene {
 }
 
 export const PROJECT_COLUMNS =
-  "id, title, input_text, format, quality, status, status_detail, progress, final_render_id, current_script_id, estimate, estimate_credits, spent_credits, target_duration_s, created_at, error";
+  "id, title, input_text, format, quality, status, status_detail, progress, final_render_id, current_script_id, estimate, estimate_credits, spent_credits, target_duration_s, style_preset, created_at, error";
 export const SCENE_COLUMNS =
   "id, idx, revision, narration, status, animate, shot_type, visual_prompt, motion_prompt, word_start, word_end, keyframe_asset_id, clip_asset_id, start_ms, end_ms, error";

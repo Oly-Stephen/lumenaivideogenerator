@@ -277,3 +277,35 @@
   - The generating screen shows stages, and keyframes appear one by one as they finish.
   - A Redo sheet with version history.
 - **Proposed new dependency:** `@phosphor-icons/react@2.1.10`. It is waiting for approval.
+
+## 2026-10-13 — D022: Working name "Whyfold" replaces "Lumen" in the UI
+- **Why "Lumen" had to go.** Brand research (`brand-research/BRAND_IDENTITY_REPORT.md`) found two conflicts:
+  - **LUMEN5** is a live US trademark (Reg. 6,245,561, class 42) for video-creation SaaS.
+  - lumen.com belongs to Lumen Technologies.
+- **Why "Whyfold".**
+  - **Domains:** .ai, .app, .io, .video and .studio unregistered (RDAP, 2026-10-13). whyfold.com was registered in May 2026 with no site.
+  - **Trademarks:** no live USPTO marks in classes 9/41/42.
+- **This is a working name.** The final name will be chosen later.
+- **Implementation:**
+  - All user-facing text reads from one constant, `BRAND` in `apps/web/lib/brand.ts`, so a rename is a one-line change.
+  - Internal package names (`@lumen/core`, etc.) are left unchanged on purpose.
+
+## 2026-10-13 — D023: App redesign as an AI-video creative tool; style sample images
+- **Direction.** At the user's request, every page was redesigned "to look like an AI video generator", light mode only. The research captures are in `brand-research/inspiration/ai-video-apps/` (Runway, Luma, Krea, Flow, Sora, Hedra, Kling, Higgsfield, HeyGen, Synthesia, VEED, InVideo).
+- **App shell:** a left sidebar with Create, Library, Credits, a live credits card and the account; a drawer on mobile.
+- **Create:** a studio layout.
+  - **Settings rail:** format shapes, length, style image tiles, narrator, quality with price ranges, extras.
+  - **Canvas:** composer, live format and style preview, and a "What you'll get" list.
+  - **Action bar:** a sticky bar with the estimate and Generate.
+- **Library:** search, filter tabs with counts, a "New video" tile, and cards with status, format and length badges.
+- **Project:** an editor layout.
+  - **Stage:** the player, or the newest keyframe with live progress.
+  - **Storyboard strip** of scenes.
+  - **Inspector:** video details, credits, retry, or the selected scene with Redo.
+  - The review steps use a full-width layout.
+- **Credits:** a balance card with used, on-hold and added stats. **Login:** split screen with the real showcase video.
+- **Sign-in redirect:** the proxy now keeps `?next=` through sign-in. The login page only accepts same-site paths, so the redirect cannot send users off-site.
+- **Style samples:**
+  - `scripts/export-style-samples.ts` exports real keyframes (Flat Editorial, Paper Cut-out).
+  - `scripts/generate-style-samples.ts --confirm` generated the other 4 with the worker's style system prompt, approved by the user.
+  - **Spend:** about **$0.18** of direct fal calls, not recorded in the `jobs` table. fal total is now about $6.63 of $15.

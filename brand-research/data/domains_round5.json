@@ -1,0 +1,277 @@
+{
+ "checked_at": "2026-10-13T10:25:16+00:00",
+ "results": {
+  "emaki": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "video": "not registered",
+   "studio": "registered"
+  },
+  "emakimono": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "video": "not registered",
+   "studio": "not registered"
+  },
+  "kamishibai": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "video": "not registered",
+   "studio": "not registered"
+  },
+  "kamishi": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "not registered",
+   "video": "not registered",
+   "studio": "not registered"
+  },
+  "shibai": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "registered",
+   "video": "not registered",
+   "studio": "not registered"
+  },
+  "ehon": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "not registered",
+   "video": "not registered",
+   "studio": "not registered"
+  },
+  "naze": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "video": "not registered",
+   "studio": "not registered"
+  },
+  "nazo": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "video": "not registered",
+   "studio": "not registered"
+  },
+  "waka": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "video": "registered",
+   "studio": "registered"
+  },
+  "wakaru": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "video": "not registered",
+   "studio": "registered"
+  },
+  "oru": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "video": "not registered",
+   "studio": "registered"
+  },
+  "ori": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "video": "not registered",
+   "studio": "registered"
+  },
+  "yomu": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "video": "not registered",
+   "studio": "registered"
+  },
+  "shiru": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "video": "not registered",
+   "studio": "not registered"
+  },
+  "kotori": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "video": "not registered",
+   "studio": "registered"
+  },
+  "kage": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "video": "registered",
+   "studio": "registered"
+  },
+  "kagee": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "video": "not registered",
+   "studio": "not registered"
+  },
+  "hako": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "video": "not registered",
+   "studio": "registered"
+  },
+  "tsumugi": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "video": "not registered",
+   "studio": "registered"
+  },
+  "kataru": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "video": "not registered",
+   "studio": "registered"
+  },
+  "hanashi": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "not registered",
+   "video": "not registered",
+   "studio": "registered"
+  },
+  "kamiko": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "registered",
+   "io": "registered",
+   "video": "not registered",
+   "studio": "registered"
+  },
+  "mado": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "video": "registered",
+   "studio": "registered"
+  },
+  "akari": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "video": "registered",
+   "studio": "registered"
+  },
+  "hikari": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "video": "registered",
+   "studio": "registered"
+  },
+  "nemu": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "video": "not registered",
+   "studio": "registered"
+  },
+  "mebae": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "video": "not registered",
+   "studio": "registered"
+  },
+  "kizashi": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "video": "not registered",
+   "studio": "not registered"
+  },
+  "emaku": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "video": "not registered",
+   "studio": "not registered"
+  },
+  "ehonly": {
+   "com": "not registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "video": "not registered",
+   "studio": "not registered"
+  },
+  "nazeya": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "video": "not registered",
+   "studio": "not registered"
+  },
+  "akariya": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "video": "not registered",
+   "studio": "not registered"
+  },
+  "oriami": {
+   "com": "registered",
+   "ai": "not registered",
+   "app": "not registered",
+   "io": "not registered",
+   "video": "not registered",
+   "studio": "not registered"
+  },
+  "kumiko": {
+   "com": "registered",
+   "ai": "registered",
+   "app": "registered",
+   "io": "registered",
+   "video": "not registered",
+   "studio": "registered"
+  }
+ }
+}

@@ -20,3 +20,8 @@ fixtures/**/*.mp3
 
 # recorded fal results reference this machine's R2 objects and generated-media URLs
 fixtures/fal/
+
+# third-party website screenshots: local design reference only, not redistributed (notes in brand-research/inspiration/README.md)
+brand-research/inspiration/*.png
+brand-research/inspiration/*.jpg
+brand-research/inspiration/ai-video-apps/
