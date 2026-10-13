@@ -43,9 +43,6 @@ export function Library({ initial }: { initial: LibraryItem[] }) {
           <h1 className="display">Library</h1>
           {initial.length > 0 && <p className="mt-1 text-muted">{initial.length} {initial.length === 1 ? "video" : "videos"}</p>}
         </div>
-        {initial.length > 0 && (
-          <Link href="/new" className={btn("primary", "md", "sm:hidden")}><Plus size={16} weight="bold" aria-hidden /> New video</Link>
-        )}
       </div>
 
       {initial.length === 0 ? (
@@ -70,7 +67,7 @@ export function Library({ initial }: { initial: LibraryItem[] }) {
           />
         </div>
       ) : (
-        <ul className="mt-8 grid grid-cols-2 gap-x-4 gap-y-7 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+        <ul className="mt-8 grid grid-cols-[repeat(auto-fill,minmax(148px,1fr))] gap-x-4 gap-y-7 sm:grid-cols-[repeat(auto-fill,minmax(176px,1fr))]">
           {initial.map((p, i) => (
             <li key={p.id} className="enter" style={{ animationDelay: `${Math.min(i, 10) * 30}ms` }}>
               <Card item={p} url={p.thumb ? urls[p.thumb] : undefined} />
@@ -91,7 +88,7 @@ function Card({ item: p, url }: { item: LibraryItem; url?: string }) {
       <div className={`relative overflow-hidden rounded-[var(--radius-card)] bg-surface-2 ring-1 ring-line transition-shadow group-hover:shadow-float group-focus-visible:ring-2 group-focus-visible:ring-accent ${p.format === "short_9x16" ? "aspect-[9/16]" : "aspect-video"}`}>
         {url ? (
           // eslint-disable-next-line @next/next/no-img-element
-          <img src={url} alt="" className="fade h-full w-full object-cover transition-transform duration-500 ease-[var(--ease)] group-hover:scale-[1.03]" />
+          <img src={url} alt="" loading="lazy" decoding="async" className="fade h-full w-full object-cover transition-transform duration-500 ease-[var(--ease)] group-hover:scale-[1.03]" />
         ) : p.thumb ? (
           <div className="skeleton h-full w-full rounded-none" />
         ) : (

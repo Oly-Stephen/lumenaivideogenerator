@@ -136,7 +136,7 @@ export function CreateForm({ voices, presets, maxDuration, balance, initialTopic
                       {p.swatch.slice(0, 5).map((c) => <span key={c} className="flex-1" style={{ background: c }} />)}
                     </span>
                     <span className="mt-2 block text-[13px] font-medium">{p.name}</span>
-                    <span className="block text-[12px] leading-snug text-muted">{p.blurb.replace(/\s*[—–]\s*/g, ". ")}</span>
+                    <span className="block text-[12px] leading-snug text-muted">{p.blurb.replace(/\s*[—–]\s*(\w)/g, (_, c: string) => `. ${c.toUpperCase()}`)}</span>
                   </button>
                 ))}
               </div>
@@ -174,7 +174,7 @@ export function CreateForm({ voices, presets, maxDuration, balance, initialTopic
         <div className="mx-auto flex max-w-2xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
           <div className="min-w-0 text-[13px] leading-tight">
             <p className="font-medium">About {lo === hi ? lo : `${lo} to ${hi}`} credits</p>
-            <p className="text-muted">Exact price shown before generating. Balance <Credits n={balance} /></p>
+            <p className="text-muted"><span className="max-sm:hidden">Exact price shown before generating. </span>Balance <Credits n={balance} /></p>
           </div>
           <Button type="submit" size="lg" busy={pending} disabled={!text.trim()}>
             {pending ? "Starting" : autopilot ? "Generate video" : "Write script"}

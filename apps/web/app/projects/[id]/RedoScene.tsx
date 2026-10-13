@@ -64,7 +64,7 @@ export function RedoSheet({ supabase, scene, balance, thumb, onClose, onDone }: 
         )}
 
         {what !== "motion" && (
-          <Field label="Image description" htmlFor="redo-visual" helper="Describe what should be in the frame. Avoid words, numbers and dates.">
+          <Field label="Image description" htmlFor="redo-visual" helper={`Describe what should be in the frame. Avoid words, numbers and dates.${/CHAR_[A-Z]/.test(visual) ? " CHAR_A and CHAR_B are the video's recurring characters; keep the tag so they stay consistent." : ""}`}>
             <textarea id="redo-visual" rows={4} value={visual} onChange={(e) => setVisual(e.target.value)} className={inputCls} />
           </Field>
         )}

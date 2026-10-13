@@ -178,7 +178,7 @@ export function ProjectLive({ initial }: { initial: Project }) {
       {done && (
         <section className={`enter mt-8 grid gap-8 ${vertical ? "md:grid-cols-[minmax(0,380px)_1fr]" : ""}`}>
           <div className={vertical ? "mx-auto w-full max-w-[380px]" : ""}>
-            <div className={`overflow-hidden rounded-[var(--radius-card)] bg-black shadow-float ${vertical ? "aspect-[9/16] max-h-[72dvh]" : "aspect-video"}`}>
+            <div className={`mx-auto overflow-hidden rounded-[var(--radius-card)] bg-black shadow-float ${vertical ? "aspect-[9/16] max-h-[72dvh] w-full max-w-[calc(72dvh*9/16)]" : "aspect-video"}`}>
               {videoUrl
                 ? <video ref={player} key={videoUrl} src={videoUrl} controls playsInline preload="metadata"
                     poster={scenes?.[0]?.keyframe_asset_id ? urls[scenes[0].keyframe_asset_id] : undefined} className="fade h-full w-full" />

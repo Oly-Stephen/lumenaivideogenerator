@@ -62,8 +62,8 @@ export function AppBar({ signedIn, email }: { signedIn: boolean; email: string |
             <>
               <CreditBalance />
               {path !== "/new" && (
-                <Link href="/new" className={btn("primary", "sm", "hidden sm:inline-flex")}>
-                  <Plus size={15} weight="bold" aria-hidden /> New video
+                <Link href="/new" aria-label="New video" className={btn("primary", "sm", "max-sm:w-8 max-sm:px-0")}>
+                  <Plus size={15} weight="bold" aria-hidden /><span className="max-sm:sr-only">New video</span>
                 </Link>
               )}
               <div ref={menuRef} className="relative">
